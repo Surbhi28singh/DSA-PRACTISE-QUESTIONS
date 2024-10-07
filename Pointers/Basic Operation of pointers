@@ -1,0 +1,29 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    int num=5;
+    //initializing pointer
+    int *ptr=&num;
+    //address of pointer
+    cout<<"adress is"<<ptr<<endl;
+    //pointer pointing to the value stored at address stored at pointer
+     cout<<"value is"<<*ptr<<endl;
+   cout<<*ptr++<<endl;
+   cout<<"size of integer"<<sizeof(num)<<endl;
+    //size of pointer is always 8 byte
+   cout<<"size of pointer"<<sizeof(ptr)<<endl;
+   int a=num;
+   a++;
+   cout<<a<<endl;
+   //doesn't change value of num
+     cout<<num<<endl;
+     (*ptr)++;
+     
+     cout<<*ptr<<endl;
+     //copying pointer
+     int*q=ptr;
+     cout<<ptr<<" - "<<q<<endl;
+     cout<<*ptr<<" - "<<*q<<endl;
+    return 0;
+}
