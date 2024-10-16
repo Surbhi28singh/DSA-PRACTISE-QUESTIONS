@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+void input(int**arr,int rows){
+    for(int i=0;i<rows;i++){
+        int cols;
+        cout<<"enter no of cols  for row"<<i+1<<endl;
+        cin>>cols;
+        arr[i]=new int[cols];
+        cout<<"enter"<<cols<<"element for row"<<i+1;
+        for(int j=0;j<cols;j++){
+            cin>>arr[i][j];
+        }
+    }
+}
+void output(int** arr,int rows){
+    
+    for(int i =0;i<rows;i++){
+        int cols=sizeof(arr[i])/sizeof(arr[i][0]);
+        for(int j =0;j<cols;j++){
+            cout<<arr[i][j];
+            
+    }
+    cout<<endl;
+    }
+}
+int main(){
+    int rows;
+    cin>>rows;
+    int** jaggedArray=new int*[rows];
+    input(jaggedArray,rows);
+    output(jaggedArray,rows);
+    //freeing memory
+     for(int i=0;i<rows;i++){
+        delete[] jaggedArray[i];
+    }
+    delete[] jaggedArray;
+    return 0;
+}
