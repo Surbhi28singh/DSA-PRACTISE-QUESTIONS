@@ -1,0 +1,72 @@
+#include <iostream>
+using namespace std;
+void merge(int*arr,int s,int e){
+    int mid=(s+e)/2;
+    int len1=mid-s+1;
+    int len2=e-mid;
+    int *first =new int[len1];
+     int *second =new int[len2];
+     int k=s;
+     for(int i=0;i<len1;i++){
+         first[i]=arr[k++];
+     }
+     k =mid+1;
+     for(int i=0;i<len2;i++){
+         second[i]=arr[k++];
+     }
+     int index1=0;
+     int index2=0;
+     k=s;
+     while(index1<len1 && index2<len2){
+         if(first[index1]<second[index2]){
+             arr[k++]=first[index1++];
+         }
+         else{
+             arr[k++]=second[index2++];
+         }
+     }
+     while(index1<len1){
+         arr[k++]=first[index1++];
+     }
+     while(index2<len2){
+         arr[k++]=second[index2++];
+     }
+     delete[]first;
+     delete[]second;
+}
+void mergeSort(int *arr,int s,int e){
+    if(s>=e){
+    return;
+        }
+        int mid=(s+e)/2;
+        //left
+        mergeSort(arr,s,mid);
+        //right
+         mergeSort(arr,mid+1,e);
+         merge(arr,s,e);
+}
+int main( ) {
+    int arr[5]={1,4,5,6,78};
+    int n=5;
+    mergeSort(arr,0,n-1);
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<endl;;
+    }cout<<endl;
+
+    return 0;
+}
+///A simple implementation of the Merge Sort algorithm in C++. Merge Sort is a divide-and-conquer algorithm that recursively divides the array into smaller subarrays, sorts them, and then merges them back together in sorted order.
+
+How It Works:
+Divide: The array is split into two halves.
+Conquer: Each half is recursively sorted.
+Merge: The two sorted halves are merged back together to form a single sorted array.
+Functions:
+merge(): Merges two sorted subarrays into one sorted array.
+mergeSort(): Recursively divides the array and calls merge() to combine the sorted subarrays.
+Time Complexity:
+Best, Average, and Worst Case: O(n log n)
+Merge Sort always divides the array into two halves (log n levels of recursion), and at each level, it performs a linear scan to merge the elements back together (O(n) work at each level). Thus, the time complexity is O(n log n) in all cases.
+Space Complexity:
+O(n)
+Merge Sort requires additional space to store the temporary arrays used during the merging process. Since it creates two temporary arrays for each merge step, the space complexity is proportional to the size of the input array.
