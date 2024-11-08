@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+int partition(int*arr,int s,int e){
+    int pivot=arr[s];
+    int cnt=0;
+    for(int i=1;i<=e;i++){
+        if(arr[i]<=pivot){
+            cnt++;
+        }
+    }
+    int pivotIndex=cnt;
+    swap(arr[pivotIndex],arr[s]);
+    int i=s,j=e;
+    while(i<pivotIndex &&j>pivotIndex){
+        while(arr[i]<=pivot){
+            i++;
+        }
+        while(arr[j]>pivot){
+            j++;
+        }
+        if(i<pivotIndex &&j>pivotIndex){
+            swap(arr[i],arr[j]);
+        }
+    }
+    return pivotIndex;
+}
+void quickSort(int*arr,int s,int e){
+    if(s>=e){
+        return;
+    }
+    int p=partition(arr,s,e);
+    quickSort(arr,s,p-1);
+    quickSort(arr,p+1,e);
+}
+int main()
+{
+   
+    int arr[6]={1,2,13,15,26,78};
+    int n=6;
+    quickSort(arr,0,n-1);
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+        
+    }cout<<endl;
+    return 0;
+}
+///this C++ implementation of QuickSort is a classic divide-and-conquer algorithm for sorting arrays. QuickSort works by selecting a pivot element from the array, partitioning the array around the pivot such that elements smaller than the pivot are placed before it, and elements larger than the pivot are placed after it. The process is recursively repeated on the subarrays formed by splitting the array at the pivot.
+
+How It Works:
+Partitioning: The array is partitioned into two subarrays, with elements less than or equal to the pivot on the left and elements greater than the pivot on the right.
+Recursive Sorting: QuickSort is recursively applied to the subarrays until the entire array is sorted.
+Functions:
+partition(arr, s, e): Partitions the array around the pivot, returning the index where the pivot is placed in the sorted array.
+quickSort(arr, s, e): Recursively sorts the array by calling partition and then sorting the subarrays.
+Example:
+
+int arr[] = {1, 2, 13, 15, 26, 78};
+int n = 6;
+quickSort(arr, 0, n-1);
+
+// Output: 1 2 13 15 26 78
+Time Complexity:
+Best Case: O(n log n) — Occurs when the pivot divides the array into nearly equal halves at each step.
+Average Case: O(n log n) — On average, the pivot divides the array into roughly equal parts.
+Worst Case: O(n²) — Happens when the pivot is the smallest or largest element (e.g., when the array is already sorted or reverse sorted). This can be mitigated with techniques like random pivot selection.
+Space Complexity:
+O(log n) for the recursion stack, in the best and average cases.
+O(n) in the worst case for the recursion stack if the array is not balanced.
