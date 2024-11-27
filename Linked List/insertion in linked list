@@ -1,0 +1,103 @@
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node*next;
+    node(int data ){
+        this->data=data;
+        this->next=NULL;
+    }
+   
+};
+ void insertAtHead(node* &head,int d){
+        node*temp =new node(d);
+        temp->next=head;
+        head=temp;
+        
+    }
+void insertAtTail(node* &tail,int d){
+    node*temp=new node(d);
+    tail->next=temp;
+    tail=tail->next;
+}
+void insertAtPosition(node* &head, node* &tail,int position,int d){
+    node*temp=head;
+    if(position==1){
+        insertAtHead(head,d);
+        return;
+    }
+   
+    int cnt=1;
+    while(cnt<position-1){
+        temp=temp->next;
+        cnt++;
+        
+    }
+    if(temp->next==NULL){
+        insertAtTail(tail,d);
+        return;
+        }
+    node*newnode=new node(d);
+    newnode->next=temp->next;
+    temp->next=newnode;
+}
+void print(node * &head){
+    node*temp=head;
+    
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+int main(){
+node* node1=new node(4);
+node*head=node1;
+node*tail=node1;
+print(head);
+insertAtHead(head,12);
+print(head);
+insertAtHead(head,15);
+print(head);
+insertAtTail(tail,24);
+print(head);
+insertAtPosition(head,tail,5,17);
+print(head);
+insertAtPosition(head,tail,1,23);
+print(head);
+insertAtPosition(head,tail,3,67);
+print(head);
+return 0;
+}
+///Linked List Implementation in C++
+This repository contains a simple implementation of a singly linked list in C++. The code demonstrates how to insert elements at different positions (head, tail, and specific positions) within the linked list.
+
+Key Features:
+Node class: The node class represents a single node in the linked list, which contains integer data and a pointer to the next node.
+Insert at Head: Insert an element at the beginning of the linked list.
+Insert at Tail: Insert an element at the end of the linked list.
+Insert at Specific Position: Insert an element at a specific position in the linked list.
+Print List: Print all the elements of the linked list.
+Functions:
+*insertAtHead(node &head, int d)**: Inserts a new node with data d at the head of the list.
+*insertAtTail(node &tail, int d)**: Appends a new node with data d at the tail of the list.
+insertAtPosition(node &head, node &tail, int position, int d)**: Inserts a new node with data d at a specified position in the list.
+*print(node &head)**: Prints all elements in the linked list.
+Example of Execution:
+cpp
+Copy code
+node* node1 = new node(4);
+node* head = node1;
+node* tail = node1;
+
+print(head);  // Output: 4
+
+insertAtHead(head, 12);
+print(head);  // Output: 12 4
+
+insertAtTail(tail, 24);
+print(head);  // Output: 12 4 24///
+
+insertAtPosition(head, tail, 3, 17);
+print(head);  // Output: 12 4 17 24
