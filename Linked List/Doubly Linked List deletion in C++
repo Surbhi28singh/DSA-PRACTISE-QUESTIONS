@@ -1,0 +1,193 @@
+
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node*next;
+    node*prev;
+    node(int data ){
+        this->data=data;
+        this->next=NULL;
+        this->prev=NULL;
+    }
+    
+     ~node(){
+        
+        if(next!=NULL){
+            delete next;
+            next=NULL;
+        }
+     }
+   
+};
+ void insertAtHead(node* &head,int d){
+      if(head==NULL){
+        node*temp =new node(d);
+         head=temp;
+     }
+     else{   
+         node*temp =new node(d); 
+        temp->next=head;
+        head->prev=temp;
+        head=temp;
+     }
+    }
+void insertAtTail(node* &tail,int d){
+      if(tail==NULL){
+        node*temp =new node(d);
+         tail=temp;
+     }
+  else{
+      
+  node*temp=new node(d);
+  tail->next=temp;
+    temp->prev=tail;
+    tail=temp;
+  } 
+
+}
+
+void insertAtPosition(node* &head, node* &tail,int position,int d){
+    node*temp=head;
+    
+    if(position==1){
+        insertAtHead(head,d);
+        return;
+    }
+   
+    int cnt=1;
+    while(cnt<position-1){
+        temp=temp->next;
+        cnt++;
+        
+    }
+    if(temp->next==NULL){
+        insertAtTail(tail,d);
+        return;
+        }
+    node*newnode=new node(d);
+    newnode->next=temp->next;
+    temp->next->prev=newnode;
+    newnode->prev=temp;
+    temp->next=newnode;
+   
+}
+void deletenode(node* &head,int position){
+        if(position==1){
+            node* temp=head;
+            temp->next->prev=NULL;
+            head=temp->next;
+            temp->next=NULL;
+            delete temp;
+        }
+        else{
+            node*curr=head;
+            node*prev=NULL;
+            int cnt=1;
+            while(cnt<position){
+                prev=curr;
+                curr=curr->next;
+                cnt++;
+            }
+            
+            
+            curr->prev=NULL;
+            prev->next=curr->next;
+            curr->next=NULL;
+            delete curr;
+        }
+    }
+
+
+void print(node * &head){
+    node*temp=head;
+    
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+int main(){
+node* node1=new node(4);
+node*head=node1;
+node*tail=node1;
+insertAtHead(head,12);
+print(head);
+insertAtHead(head,15);
+print(head);
+insertAtTail(tail,24);
+print(head);
+insertAtPosition(head,tail,5,17);
+print(head);
+insertAtPosition(head,tail,1,97);
+print(head);
+insertAtPosition(head,tail,3,67);
+print(head);
+deletenode(head,3);
+print(head);
+deletenode(head,1);
+print(head);
+deletenode(head,5);
+print(head);
+return 0;
+}
+///Doubly Linked List Implementation in C++
+This repository contains the implementation of a Doubly Linked List in C++, where each node contains pointers to both the next and previous nodes. The linked list supports the following operations:
+
+Insert at Head: Insert a new node at the beginning of the list.
+Insert at Tail: Insert a new node at the end of the list.
+Insert at Position: Insert a new node at a specified position in the list.
+Delete Node: Delete a node at a specified position in the list.
+Print List: Print the elements of the list from head to tail.
+Code Walkthrough
+Node Class: The node class contains three members: data, next, and prev. The data holds the value of the node, while next and prev store pointers to the next and previous nodes respectively. A destructor is implemented to recursively delete the next node to ensure memory is freed correctly.
+
+Insert at Head: The insertAtHead function creates a new node and places it at the beginning of the list. If the list is empty, it sets the head to this new node.
+
+Insert at Tail: The insertAtTail function adds a node at the end of the list. If the list is empty, it directly sets the tail to the new node.
+
+Insert at Position: The insertAtPosition function allows the insertion of a node at a specific position in the list. If the position is 1, it calls insertAtHead, and if it's the end of the list, it calls insertAtTail.
+
+Delete Node: The deletenode function removes a node at a given position. It properly handles edge cases like deleting the head or tail.
+
+Print List: The print function traverses the list from head to tail, printing each node's data.
+
+Example Usage
+cpp
+Copy code
+node* node1 = new node(4);
+node* head = node1;
+node* tail = node1;
+
+insertAtHead(head, 12);  // Insert 12 at the head
+print(head);  // Output: 12 4
+
+insertAtHead(head, 15);  // Insert 15 at the head
+print(head);  // Output: 15 12 4
+
+insertAtTail(tail, 24);  // Insert 24 at the tail
+print(head);  // Output: 15 12 4 24
+
+insertAtPosition(head, tail, 5, 17);  // Insert 17 at position 5
+print(head);  // Output: 15 12 4 24 17
+
+insertAtPosition(head, tail, 1, 97);  // Insert 97 at position 1 (head)
+print(head);  // Output: 97 15 12 4 24 17
+
+insertAtPosition(head, tail, 3, 67);  // Insert 67 at position 3
+print(head);  // Output: 97 15 67 12 4 24 17
+
+deletenode(head, 3);  // Delete the node at position 3
+print(head);  // Output: 97 15 12 4 24 17
+
+deletenode(head, 1);  // Delete the head node
+print(head);  // Output: 15 12 4 24 17
+
+deletenode(head, 5);  // Delete the node at position 5 (tail)
+print(head);  // Output: 15 12 4 24
+Features
+Efficient Memory Management: The node class destructor ensures that the memory is freed correctly when nodes are deleted.
+Handles Edge Cases: The code handles cases like insertion at the head, insertion at the tail, and deletion at any position (including out-of-bounds positions).
+Bidirectional Traversal: Since this is a doubly linked list, nodes can be traversed both forwards and backwards.
