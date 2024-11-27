@@ -1,0 +1,153 @@
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node*next;
+    node*prev;
+    node(int data ){
+        this->data=data;
+        this->next=NULL;
+        this->prev=NULL;
+    }
+    
+    
+   
+};
+ void insertAtHead(node* &head,int d){
+        node*temp =new node(d); 
+        temp->next=head;
+        head->prev=temp;
+        head=temp;
+        
+    }
+void insertAtTail(node* &tail,int d){
+    node*temp=new node(d);
+    
+    tail->next=temp;
+    temp->prev=tail;
+    tail=temp;
+}
+
+void insertAtPosition(node* &head, node* &tail,int position,int d){
+    node*temp=head;
+    
+    if(position==1){
+        insertAtHead(head,d);
+        return;
+    }
+   
+    int cnt=1;
+    while(cnt<position-1){
+        temp=temp->next;
+        cnt++;
+        
+    }
+    if(temp->next==NULL){
+        insertAtTail(tail,d);
+        return;
+        }
+    node*newnode=new node(d);
+    newnode->next=temp->next;
+    temp->next->prev=newnode;
+    newnode->prev=temp;
+    temp->next=newnode;
+   
+}
+
+void print(node * &head){
+    node*temp=head;
+    
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+int main(){
+node* node1=new node(4);
+node*head=node1;
+node*tail=node1;
+insertAtHead(head,12);
+print(head);
+insertAtHead(head,15);
+print(head);
+insertAtTail(tail,24);
+print(head);
+insertAtPosition(head,tail,5,17);
+print(head);
+insertAtPosition(head,tail,1,97);
+print(head);
+insertAtPosition(head,tail,3,67);
+print(head);
+return 0;
+}
+////Doubly Linked List Implementation in C++
+This repository demonstrates a C++ implementation of a Doubly Linked List, where each node stores data and has two pointers: one pointing to the next node and another pointing to the previous node. The code includes operations to insert elements at the head, tail, and a specific position, as well as to print the list.
+
+Key Features:
+Node class: The node class represents a node in the doubly linked list. Each node contains:
+data: The integer data value.
+next: A pointer to the next node in the list.
+prev: A pointer to the previous node in the list.
+Insert at Head: Adds a new node at the beginning of the list.
+Insert at Tail: Appends a new node at the end of the list.
+Insert at Specific Position: Adds a node at a specified position in the list.
+Print List: Displays the elements of the linked list.
+Functions:
+*insertAtHead(node &head, int d)**: Inserts a new node with data d at the head of the list.
+*insertAtTail(node &tail, int d)**: Adds a new node with data d at the end of the list.
+insertAtPosition(node &head, node &tail, int position, int d)**: Inserts a new node with data d at the specified position in the list.
+*print(node &head)**: Prints the elements of the linked list from head to tail.
+Example of Execution:
+cpp
+Copy code
+node* node1 = new node(4);
+node* head = node1;
+node* tail = node1;
+
+insertAtHead(head, 12);
+print(head);  // Output: 12 4
+
+insertAtTail(tail, 24);
+print(head);  // Output: 12 4 24
+
+insertAtPosition(head, tail, 3, 17);
+print(head);  // Output: 12 4 17 24
+
+insertAtPosition(head, tail, 1, 97);
+print(head);  // Output: 97 12 4 17 24
+
+insertAtPosition(head, tail, 3, 67);
+print(head);  // Output: 97 12 67 4 17 24
+Code Explanation:
+Node Class:
+The node class has a constructor to initialize a node's data, next, and prev pointers.
+The next pointer points to the next node in the list, while the prev pointer points to the previous node.
+Insert Operations:
+At Head: A new node is inserted at the beginning of the list. The head pointer is updated accordingly.
+At Tail: A new node is added at the end. The tail pointer is updated to point to the newly added node.
+At Position: A new node is inserted at the given position by traversing the list. The node's next and prev pointers are adjusted accordingly.
+Print List:
+The print function traverses the list from head to tail and outputs the data of each node.
+Example Use Case:
+cpp
+Copy code
+node* node1 = new node(4);
+node* head = node1;
+node* tail = node1;
+
+// Insert at head
+insertAtHead(head, 12);
+insertAtHead(head, 15);
+
+// Insert at tail
+insertAtTail(tail, 24);
+
+// Insert at a specific position
+insertAtPosition(head, tail, 3, 17);
+insertAtPosition(head, tail, 1, 97);
+insertAtPosition(head, tail, 3, 67);
+
+// Print the linked list
+print(head);  // Output: 97 12 67 4 17 24
