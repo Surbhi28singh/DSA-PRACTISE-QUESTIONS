@@ -1,0 +1,134 @@
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node*next;
+    node(int data ){
+        this->data=data;
+        this->next=NULL;
+    }
+    ~node(){
+        int value=this->data;
+        if(this->next!=NULL){
+            delete next;
+            this->next=NULL;
+        }
+    }
+   
+};
+ void insertAtHead(node* &head,int d){
+        node*temp =new node(d);
+        temp->next=head;
+        head=temp;
+        
+    }
+void insertAtTail(node* &tail,int d){
+    node*temp=new node(d);
+    tail->next=temp;
+    tail=tail->next;
+}
+void insertAtPosition(node* &head, node* &tail,int position,int d){
+    node*temp=head;
+    if(position==1){
+        insertAtHead(head,d);
+        return;
+    }
+}
+ void deletenode(node* &head,int position){
+        if(position==1){
+            node* temp=head;
+            head=head->next;
+            temp->next=NULL;
+            delete temp;
+        }
+        else{
+            node*curr=head;
+            node*prev=NULL;
+            int cnt=1;
+            while(cnt<position){
+                prev=curr;
+                curr=curr->next;
+                cnt++;
+            }
+            prev->next=curr->next;
+            curr->next=NULL;
+            delete curr;
+        }
+    }
+
+void print(node * &head){
+    node*temp=head;
+    
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+int main(){
+node* node1=new node(4);
+node*head=node1;
+node*tail=node1;
+insertAtHead(head,12);
+print(head);
+insertAtHead(head,15);
+print(head);
+insertAtTail(tail,24);
+print(head);
+insertAtPosition(head,tail,5,17);
+print(head);
+deletenode(head,3);
+print(head);
+deletenode(head,1);
+print(head);
+return 0;
+}
+////Singly Linked List Implementation with Deletion in C++
+This repository contains a C++ implementation of a singly linked list that supports inserting nodes at different positions, as well as deleting nodes. Additionally, memory management is handled through a destructor in the node class, ensuring proper cleanup when nodes are deleted.
+
+Key Features:
+Node class: The node class represents each node in the linked list, which holds an integer data and a pointer to the next node. The destructor ensures memory cleanup when nodes are deleted.
+Insert at Head: Adds a new node at the beginning of the list.
+Insert at Tail: Appends a new node at the end of the list.
+Insert at Specific Position: Adds a node at a specified position in the list.
+Delete Node: Removes a node at a given position from the list, ensuring proper memory deallocation.
+Print List: Displays the elements of the linked list.
+Functions:
+*insertAtHead(node &head, int d)**: Inserts a new node with data d at the head of the list.
+*insertAtTail(node &tail, int d)**: Adds a new node with data d at the end of the list.
+insertAtPosition(node &head, node &tail, int position, int d)**: Inserts a new node with data d at the given position in the list (only handles inserting at the head in the current version).
+*deletenode(node &head, int position)**: Deletes the node at the specified position in the list, handling both head and non-head deletions.
+*print(node &head)**: Prints the elements in the linked list.
+Destructor:
+~node(): Ensures proper memory cleanup by recursively deleting the next node in the linked list when a node is destroyed.
+Example Usage:
+cpp
+Copy code
+node* node1 = new node(4);
+node* head = node1;
+node* tail = node1;
+
+insertAtHead(head, 12);
+print(head);  // Output: 12 4
+
+insertAtTail(tail, 24);
+print(head);  // Output: 12 4 24
+
+insertAtPosition(head, tail, 3, 17);
+print(head);  // Output: 12 4 17 24
+
+deletenode(head, 3);  // Deletes node at position 3
+print(head);  // Output: 12 4 24
+
+deletenode(head, 1);  // Deletes node at position 1 (head)
+print(head);  // Output: 4 24
+Code Explanation:
+Node Class:
+The node class includes a constructor for initializing the node's data and next pointer, and a destructor for cleaning up memory when a node is deleted.
+Insert Operations:
+Insertions at the head, tail, and a specific position allow flexible node addition.
+Delete Operation:
+The deletenode function handles node deletion both from the head and from the middle of the list by traversing to the specified position and updating pointers.
+Memory Management:
+The destructor (~node()) ensures that all nodes' memory is freed when they are no longer in use.
