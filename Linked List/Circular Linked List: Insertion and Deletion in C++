@@ -1,0 +1,293 @@
+#include <iostream>
+using namespace std;
+
+// Define the 'node' class for a circular linked list
+class node {
+public:
+    int data;     // Data of the node
+    node* next;   // Pointer to the next node in the list
+
+    // Constructor to initialize node with a value 'd'
+    node(int d) {
+        this->data = d;  // Set the data of the node
+        this->next = NULL; // Initially, the next pointer is set to NULL
+    }
+
+    // Destructor to clean up memory when a node is deleted
+    ~node() {
+        if (this->next != NULL) {
+            delete next;  // Recursively delete the next node
+            next = NULL;   // Set the next pointer to NULL for safety
+        }
+    }
+};
+
+// Function to insert a new node after the node with the given 'element' value
+void insertNode(node*& tail, int element, int d) {
+    // If the list is empty, create a new node and make it point to itself (circular list)
+    if (tail == NULL) {
+        node* newnode = new node(d);
+        tail = newnode;
+        newnode->next = newnode;  // Point the new node to itself (circular list)
+    }
+    else {
+        node* curr = tail;
+        // Traverse the list until the node with the given 'element' is found
+        while (curr->data != element) {
+            curr = curr->next;
+        }
+
+        // Create a new node and insert it after the 'element' node
+        node* temp = new node(d);
+        temp->next = curr->next;  // Make the new node point to the next of current node
+        curr->next = temp;        // Make the current node point to the new node
+    }
+}
+
+// Function to delete the node with a given 'value' from the circular linked list
+void Ndelete(node*& tail, int value) {
+    if (tail == NULL) {
+        cout << "List is empty" << endl; // If the list is empty, nothing to delete
+    }
+    else {
+        node* prev = tail;    // Start from the tail node
+        node* curr = prev->next; // The first node in the list
+
+        // Traverse the list to find the node with the 'value' to delete
+        while (curr->data != value) {
+            prev = curr;
+            curr = curr->next;
+        }
+
+        // Adjust the pointers to remove the node from the list
+        prev->next = curr->next; // Link previous node to the next node of the current node
+
+        // If the node to be deleted is the only node in the list
+        if (curr == prev) {
+            tail = NULL; // The list becomes empty, set tail to NULL
+        }
+        // If the node to be deleted is the last node (tail)
+        else if (tail == curr) {
+            tail = prev; // Update the tail pointer to the previous node
+        }
+
+        curr->next = NULL; // Disconnect the current node's next pointer
+        delete curr; // Free the memory allocated for the current node
+    }
+}
+
+// Function to print the entire circular linked list
+void print(node* tail) {
+    node* temp = tail;   // Temporary pointer to traverse the list
+    if (tail == NULL) {
+        cout << "List is empty" << endl;  // If the list is empty, print a message
+    }
+    else {
+        // Traverse the list and print the data of each node
+        do {
+            cout << tail->data << " ";
+            tail = tail->next;
+        } while (tail != temp); // Stop when we circle back to the original tail
+    }
+    cout << endl;  // Print a newline after printing the list
+}
+
+// Main function to test the above functions
+int main() {
+    node* tail = NULL;  // Initialize the tail pointer to NULL (empty list)
+
+    // Insert nodes into the circular linked list
+    insertNode(tail, 3, 5);  // Insert 5 after node with data 3 (which is initially NULL)
+    print(tail);              // Print the list (should print 5)
+
+    insertNode(tail, 5, 6);  // Insert 6 after node with data 5
+    print(tail);              // Print the list (should print 5 6)
+
+    insertNode(tail, 6, 8);  // Insert 8 after node with data 6
+    print(tail);              // Print the list (should print 5 6 8)
+
+    insertNode(tail, 6, 7);  // Insert 7 after node with data 6
+    print(tail);              // Print the list (should print 5 6 7 8)
+
+    Ndelete(tail, 5);        // Delete the node with data 5
+    print(tail);             // Print the list (should print 6 7 8)
+
+    Ndelete(tail, 7);        // Delete the node with data 7
+    print(tail);             // Print the list (should print 6 8)
+
+    return 0;  // End of program
+}
+//ChatGPT
+Certainly! Below is the commented code, along with a suggested GitHub description for the repository.
+
+Code with Comments:
+cpp
+Copy code
+#include <iostream>
+using namespace std;
+
+// Define the 'node' class for a circular linked list
+class node {
+public:
+    int data;     // Data of the node
+    node* next;   // Pointer to the next node in the list
+
+    // Constructor to initialize node with a value 'd'
+    node(int d) {
+        this->data = d;  // Set the data of the node
+        this->next = NULL; // Initially, the next pointer is set to NULL
+    }
+
+    // Destructor to clean up memory when a node is deleted
+    ~node() {
+        if (this->next != NULL) {
+            delete next;  // Recursively delete the next node
+            next = NULL;   // Set the next pointer to NULL for safety
+        }
+    }
+};
+
+// Function to insert a new node after the node with the given 'element' value
+void insertNode(node*& tail, int element, int d) {
+    // If the list is empty, create a new node and make it point to itself (circular list)
+    if (tail == NULL) {
+        node* newnode = new node(d);
+        tail = newnode;
+        newnode->next = newnode;  // Point the new node to itself (circular list)
+    }
+    else {
+        node* curr = tail;
+        // Traverse the list until the node with the given 'element' is found
+        while (curr->data != element) {
+            curr = curr->next;
+        }
+
+        // Create a new node and insert it after the 'element' node
+        node* temp = new node(d);
+        temp->next = curr->next;  // Make the new node point to the next of current node
+        curr->next = temp;        // Make the current node point to the new node
+    }
+}
+
+// Function to delete the node with a given 'value' from the circular linked list
+void Ndelete(node*& tail, int value) {
+    if (tail == NULL) {
+        cout << "List is empty" << endl; // If the list is empty, nothing to delete
+    }
+    else {
+        node* prev = tail;    // Start from the tail node
+        node* curr = prev->next; // The first node in the list
+
+        // Traverse the list to find the node with the 'value' to delete
+        while (curr->data != value) {
+            prev = curr;
+            curr = curr->next;
+        }
+
+        // Adjust the pointers to remove the node from the list
+        prev->next = curr->next; // Link previous node to the next node of the current node
+
+        // If the node to be deleted is the only node in the list
+        if (curr == prev) {
+            tail = NULL; // The list becomes empty, set tail to NULL
+        }
+        // If the node to be deleted is the last node (tail)
+        else if (tail == curr) {
+            tail = prev; // Update the tail pointer to the previous node
+        }
+
+        curr->next = NULL; // Disconnect the current node's next pointer
+        delete curr; // Free the memory allocated for the current node
+    }
+}
+
+// Function to print the entire circular linked list
+void print(node* tail) {
+    node* temp = tail;   // Temporary pointer to traverse the list
+    if (tail == NULL) {
+        cout << "List is empty" << endl;  // If the list is empty, print a message
+    }
+    else {
+        // Traverse the list and print the data of each node
+        do {
+            cout << tail->data << " ";
+            tail = tail->next;
+        } while (tail != temp); // Stop when we circle back to the original tail
+    }
+    cout << endl;  // Print a newline after printing the list
+}
+
+// Main function to test the above functions
+int main() {
+    node* tail = NULL;  // Initialize the tail pointer to NULL (empty list)
+
+    // Insert nodes into the circular linked list
+    insertNode(tail, 3, 5);  // Insert 5 after node with data 3 (which is initially NULL)
+    print(tail);              // Print the list (should print 5)
+
+    insertNode(tail, 5, 6);  // Insert 6 after node with data 5
+    print(tail);              // Print the list (should print 5 6)
+
+    insertNode(tail, 6, 8);  // Insert 8 after node with data 6
+    print(tail);              // Print the list (should print 5 6 8)
+
+    insertNode(tail, 6, 7);  // Insert 7 after node with data 6
+    print(tail);              // Print the list (should print 5 6 7 8)
+
+    Ndelete(tail, 5);        // Delete the node with data 5
+    print(tail);             // Print the list (should print 6 7 8)
+
+    Ndelete(tail, 7);        // Delete the node with data 7
+    print(tail);             // Print the list (should print 6 8)
+
+    return 0;  // End of program
+}
+Explanation of the Code:
+Node Class:
+
+The node class represents each node in the circular linked list.
+It has a constructor to initialize the node with data and a destructor to ensure proper memory cleanup by deleting any subsequent nodes.
+InsertNode Function:
+
+This function inserts a new node after a node with a given value (element).
+If the list is empty (tail == NULL), a new node is created and points to itself, forming a circular linked list.
+Ndelete Function:
+
+This function deletes a node with a specific value from the list.
+It handles three cases: deleting the only node in the list, deleting a node that is the tail, and deleting a node in the middle of the list.
+Print Function:
+
+This function prints the entire circular linked list starting from the tail node.
+It loops through the list and prints each node's data until it circles back to the tail node.
+Main Function:
+
+The main() function tests the functionality by inserting nodes and printing the list after each insertion and deletion.
+GitHub Repository Description:
+Repository Name: Circular Linked List in C++
+
+Description: This C++ program demonstrates the implementation of a circular linked list. The circular linked list has the following key features:
+
+Node structure: Each node contains an integer value and a pointer to the next node.
+InsertNode function: This function inserts a new node after a node with a specific value, allowing nodes to be added dynamically to the list.
+Ndelete function: This function deletes a node with a specific value from the list, handling cases such as deleting the tail or the only node in the list.
+Circular behavior: The list is circular, meaning the last node points back to the first node.
+Memory management: The program ensures proper memory management by using a destructor that recursively deletes nodes when they are no longer needed.
+Usage:
+
+The program initializes an empty circular linked list.
+It inserts nodes with given values.
+It prints the list to show the current state after each insertion.
+It deletes nodes and prints the list after each deletion.
+How to Run:
+
+Compile the program using a C++ compiler (e.g., g++).
+Run the executable to see the operations on the circular linked list.
+Example Output:
+
+Copy code
+5
+5 6
+5 6 8
+5 6 7 8
+6 7 8
+6 8
