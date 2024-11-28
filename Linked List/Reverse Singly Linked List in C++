@@ -1,0 +1,24 @@
+//question//
+Problem statement
+Given a singly linked list of integers. Your task is to return the head of the reversed linked list.
+
+For example:
+The given linked list is 1 -> 2 -> 3 -> 4-> NULL. Then the reverse linked list is 4 -> 3 -> 2 -> 1 -> NULL and the head of the reversed linked list will be 4.
+//approach//
+void reverse(LinkedListNode<int> * &head,LinkedListNode<int> *curr,LinkedListNode<int> *prev){
+  if(curr==NULL){
+      head=prev;
+      return;
+  }
+  LinkedListNode<int> *forward=curr->next;
+  reverse(head,forward,curr);
+  curr->next=prev;
+}
+LinkedListNode<int> *reverseLinkedList(LinkedListNode<int> *head) 
+{
+  
+   LinkedListNode<int> *prev =NULL;
+  LinkedListNode<int> *curr=head;
+  reverse(head,curr,prev);
+  return head;
+}
