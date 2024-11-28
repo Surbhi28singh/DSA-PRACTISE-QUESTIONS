@@ -1,0 +1,63 @@
+//question//
+Problem statement
+Given a singly linked list of 'N' nodes.
+The objective is to determine the middle node of a singly linked list.
+However, if the list has an even number of nodes, we return the second middle node.
+ //approach1//
+//In this approach, we first calculate the length of the linked list. 
+Once we have the length, we traverse the list again until we reach the middle node by iterating through length / 2 nodes.
+
+Time Complexity: O(n) for calculating the length and then traversing half of the list.
+Space Complexity: O(1), as we only use a few extra variables.//
+ //approach1//
+int getLength(Node*head){
+int len=0;
+while(head!=NULL){
+    len++;
+   head= head->next;
+}
+return len;
+}
+
+Node *findMiddle(Node *head) {
+    int len=getLength(head);
+    Node*temp=head;
+    int ans=(len/2);
+    int cnt=0;
+    while(cnt<ans){
+       temp=temp->next;
+       cnt++;
+    }
+    return temp;
+}
+//approach2//
+//This approach uses two pointers, slow and fast.
+The slow pointer moves one step at a time, while the fast pointer moves two steps at a time.
+When the fast pointer reaches the end of the list, the slow pointer will be at the middle node.
+
+Time Complexity: O(n), as we traverse the list once.
+Space Complexity: O(1), as we use only a constant amount of extra space.//
+//approach2//
+Node* getMiddle(Node*head){
+    if(head==NULL||head->next==NULL)
+        return head;
+    
+    if(head->next->next==NULL){
+        return head->next;
+
+    }
+    Node*slow=head;
+    Node*fast=head->next;
+    while(fast!=NULL){
+        fast=fast->next;
+        if (fast != NULL) {
+            fast=fast->next;
+        }
+        slow=slow->next;
+    }
+    return slow;
+}
+Node *findMiddle(Node *head) {
+   return getMiddle(head);
+}
+
