@@ -1,0 +1,91 @@
+
+//approach1//
+bool detectcycle(node* head){
+    if(head==NULL){
+        return false;
+    }
+    map<node*,bool>visited;
+    node*temp=head;
+    while(temp!=NULL){
+        if(visited[temp]==true){
+            return true;
+        }
+        visited[temp]=true;
+        temp=temp->next;
+    }
+    return false;
+}
+//approach2//
+node* floydDetect(node*head){
+    if(head==NULL){
+        return NULL;
+    
+    }
+    node*slow=head;
+    node*fast=head;
+    while(slow!=NULL && fast!=NULL ){
+        fast=fast->next;
+        if(fast!=NULL){
+            fast=fast->next;
+            
+        }
+        slow=slow->next;
+        if(slow==fast)
+        {
+            return slow;
+        }
+        
+    }
+    return  NULL;
+    
+}
+//approach3//
+node*getStartingNode(node*head){
+    if(head==NULL){
+        return NULL;
+    }
+    node*intersection=floydDetect(head);
+    node*slow=head;
+    while(slow!=intersection){
+        slow=slow->next;
+        intersection=intersection->next;
+        
+    }
+    return slow;
+}
+//appraoch4//
+void removeLoop(node*head){
+    if(head==NULL){
+        return ;
+    }
+    node*start=getStartingNode(head);
+    node*temp=start;
+    while(temp->next!=start){
+        temp=temp->next;
+    }
+    temp->next=NULL;
+}
+    This repository provides different approaches for detecting and removing loops (cycles) in a singly linked list.
+
+The following methods are implemented:
+
+Approach 1: Using a Hash Map (Visited Nodes Tracking)
+
+Detects a cycle by storing visited nodes in a map. If a node is revisited, it indicates a cycle. This approach uses extra space for tracking nodes.
+Time Complexity: O(n)
+Space Complexity: O(n)
+Approach 2: Floyd’s Cycle Detection Algorithm (Tortoise and Hare)
+
+Uses two pointers (slow and fast) to detect a cycle. The slow pointer moves one step at a time, and the fast pointer moves two steps. If the two pointers meet, a cycle is detected.
+Time Complexity: O(n)
+Space Complexity: O(1)
+Approach 3: Finding the Starting Node of the Cycle
+
+Once a cycle is detected using Floyd’s algorithm, this method finds the exact node where the cycle begins.
+Time Complexity: O(n)
+Space Complexity: O(1)
+Approach 4: Removing the Loop
+
+After detecting the starting node of the cycle, this method removes the cycle by setting the next pointer of the last node in the cycle to NULL.
+Time Complexity: O(n)
+Space Complexity: O(1)
