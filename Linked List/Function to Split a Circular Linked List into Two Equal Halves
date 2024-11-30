@@ -1,0 +1,40 @@
+void splitCircularList(Node *head)
+{
+    if (head == NULL) return;
+
+    Node* slow = head;
+    Node* fast = head;
+    
+    // Move 'fast' two steps and 'slow' one step to find the middle
+    while (fast->next != head && fast->next->next != head) {
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+
+    // First half starts from head to slow
+    Node* firsthalf = head;
+    Node* secondhalf = slow->next;
+
+    // Break the circular connection for first half
+    slow->next = firsthalf;
+
+    // Now, to close the second half in a circular way
+    Node* temp = secondhalf;
+    while (temp->next != head) {
+        temp = temp->next;
+    }
+    temp->next = secondhalf;  // Connect the last node of secondhalf to the secondhalf itself
+
+    // Now, both halves are circular
+}
+
+//This function splits a circular linked list into two equal halves. The list is modified such that the first half points to itself in a circular manner, and the second half forms its own circular linked list as well. The function ensures that both halves are valid circular linked lists.
+
+Explanation:
+Input: A circular linked list with an even number of nodes.
+Output: Two circular linked lists, each containing half of the original nodes. Both halves remain circular.
+Approach:
+Use the slow and fast pointer technique to find the middle of the circular linked list.
+The slow pointer will be at the middle, and the fast pointer moves twice as fast to find the loop's end.
+Split the list into two parts, breaking the circular connection for the first half and maintaining the circular nature of both halves.
+The time complexity is O(N), where N is the number of nodes in the circular linked list
