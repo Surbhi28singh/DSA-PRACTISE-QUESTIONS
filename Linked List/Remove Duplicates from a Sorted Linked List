@@ -1,0 +1,24 @@
+Node * removeDuplicates(Node *head)
+{
+    if(head==NULL)
+    return NULL;
+    Node*curr=head;
+    while(curr!=NULL){
+        if(curr->next!=NULL &&curr->data==curr->next->data) {
+         Node*nodeToDelete=curr->next;
+         Node*next_next=curr->next->next;
+         delete (nodeToDelete);
+         curr->next=next_next;
+        } else {
+         curr = curr->next;
+        }
+    }
+    return head;
+}
+//This repository contains an efficient C++ implementation of a function that removes duplicate nodes from a sorted singly linked list.
+
+Features:
+Efficient Duplicate Removal: The function traverses the linked list once and removes any duplicate nodes. Since the list is sorted, duplicates are always adjacent.
+Memory Management: The function uses the delete operator to free memory from nodes that are no longer needed.
+Time Complexity: O(n), where n is the number of nodes in the linked list.
+Space Complexity: O(1), as the function modifies the list in place without using additional space (other than a few pointers).
