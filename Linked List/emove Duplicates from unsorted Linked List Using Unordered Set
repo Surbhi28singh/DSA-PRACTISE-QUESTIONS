@@ -1,0 +1,34 @@
+Node* removeDuplicates(Node* head) {
+    if (head == nullptr) 
+    return nullptr;
+
+    unordered_set<int> seen;
+    Node* curr = head;
+    seen.insert(curr->data);  
+
+    while (curr != nullptr && curr->next != nullptr) {
+        if (seen.find(curr->next->data) != seen.end()) {
+            
+            Node* duplicate = curr->next;
+            curr->next = curr->next->next;
+            delete duplicate;
+        } else {
+           
+            seen.insert(curr->next->data);
+            curr = curr->next;
+        }
+    }
+
+    return head;
+
+//This C++ implementation removes duplicate elements from a linked list such that each element occurs only once. The approach uses an unordered_set to track the values already seen in the list. This ensures that only the first occurrence of each element is kept, and all subsequent duplicates are removed efficiently.
+
+Features:
+Efficient Duplicate Removal: Uses unordered_set to track elements and detect duplicates in O(1) time complexity on average.
+Space Complexity: The space complexity is O(N) where N is the number of elements in the list.
+Time Complexity: The time complexity is O(N) where N is the number of nodes in the linked list.
+How It Works:
+Traverse through the linked list.
+For each node, check if its value is already present in the unordered_set.
+If the value is found, delete the duplicate node by adjusting pointers.
+If the value is not found, insert it into the set and move to the next node.
