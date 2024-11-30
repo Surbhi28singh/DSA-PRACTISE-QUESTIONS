@@ -1,0 +1,48 @@
+int getLength(Node*head,int k){
+     int c=0;
+     while(head!=NULL){
+         c++;
+         head=head->next;
+     }
+     return c;
+ }
+ Node* kReverse(Node* head, int k) {
+    // Base case: If the list is empty or contains fewer than k nodes, return head as is
+    if (head == NULL) {
+        return NULL;
+    }
+
+    Node* next = NULL;
+    Node* curr = head;
+    Node* prev = NULL;
+    int count = 0;
+
+    // Reverse the first k nodes of the list
+    while (curr != NULL && count < k) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+        count++;
+    }
+
+   
+    if (next != NULL) {
+        if (getLength(next,k)>=k){
+         head->next = kReverse(next, k);
+        } else {
+         head->next = next;
+        }
+    }
+    return prev;
+}
+//Problem Description
+This solution reverses a linked list in groups of k nodes. If the remaining nodes are fewer than k, they are left unchanged.
+
+Functions:
+kReverse(Node* head, int k): Reverses the linked list in groups of k nodes. If the last group has fewer than k nodes, it remains unchanged.
+getLength(Node* head, int k): Helper function to calculate the length of the remaining part of the list.
+Time Complexity:
+O(n), where n is the number of nodes in the list.
+Space Complexity:
+O(1), using constant space.
