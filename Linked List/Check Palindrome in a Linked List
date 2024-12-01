@@ -1,0 +1,125 @@
+approach1//
+#include <vector>
+class Solution {
+private:
+    // Helper function to check if the vector is a palindrome.
+    bool checkPalindrome(vector<int> arr) {
+        int n = arr.size();
+        int s = 0;
+        int e = n - 1;
+        // Compare the elements from the start and end of the array
+        while (s <= e) {
+            if (arr[s] != arr[e]) {
+                return false;  // If any elements don't match, it's not a palindrome
+            }
+            s++;
+            e--;
+        }
+        return true;  // If all elements match, it's a palindrome
+    }
+  
+public:
+    // Function to check whether the linked list is a palindrome.
+    bool isPalindrome(Node *head) {
+        vector<int> arr;
+        Node* temp = head;
+        // Traverse the list and store elements in the vector
+        while (temp != NULL) {
+            arr.push_back(temp->data);
+            temp = temp->next;
+        }
+        // Check if the array is a palindrome
+        return checkPalindrome(arr);
+    }
+};
+
+//approach2//
+#include <vector>
+class Solution {
+private:
+    // Helper function to get the middle node of the list using slow and fast pointers.
+    Node* getMid(Node* head) {
+        Node* slow = head;
+        Node* fast = head->next;
+        // Move fast pointer by two steps and slow pointer by one step
+        while (fast != NULL && fast->next != NULL) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        return slow;  // Return the middle node
+    }
+    
+    // Helper function to reverse the linked list.
+    Node* reverse(Node* head) {
+        Node* prev = NULL;
+        Node* curr = head;
+        Node* next = NULL;
+        // Reverse the list by adjusting the next pointers
+        while (curr != NULL) {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;  // Return the new head of the reversed list
+    }
+
+public:
+    // Function to check whether the linked list is a palindrome.
+    bool isPalindrome(Node *head) {
+        // If the list is empty or contains a single element, it's a palindrome
+        if (head == NULL || head->next == NULL) {
+            return true;
+        }
+
+        // Step 1: Get the middle of the list
+        Node* middle = getMid(head);
+        
+        // Step 2: Reverse the second half of the list
+        Node* temp = middle->next;
+        middle->next = reverse(temp);
+
+        // Step 3: Compare both halves of the list
+        Node* head1 = head;
+        Node* head2 = middle->next;
+        while (head2 != NULL) {
+            if (head1->data != head2->data) {
+                return false;  // If any nodes don't match, it's not a palindrome
+            }
+            head1 = head1->next;
+            head2 = head2->next;
+        }
+
+        // Step 4: Restore the original list (reverse the second half again)
+        temp = middle->next;
+        middle->next = reverse(temp);
+        
+        return true;  // If all comparisons matched, the list is a palindrome
+    }
+};
+//This repository contains two different approaches to check whether a singly linked list is a palindrome.
+
+Approach 1: Using a Vector
+In this approach, the linked list is traversed, and all its elements are stored in a vector. After that, the vector is checked to see if it reads the same forwards and backwards. This approach provides a simple solution but requires extra space for the vector.
+
+Approach 2: Using Fast and Slow Pointers
+This approach uses a more efficient method by utilizing slow and fast pointers. The slow pointer identifies the middle of the list, and the second half of the list is reversed. The two halves are then compared for equality. This method does not require extra space, making it more space-efficient.
+
+Key Features:
+Two Approaches: The repository provides two approaches to check whether a linked list is a palindrome.
+
+Approach 1 uses a vector to store the list elements.
+Approach 2 uses the fast-slow pointer technique with in-place list reversal.
+Space Complexity:
+
+Approach 1: O(n) for the vector storage.
+Approach 2: O(1), as it uses constant extra space.
+Time Complexity:
+
+Both approaches have a time complexity of O(n), where n is the length of the linked list.
+Edge Case Handling: Both approaches handle edge cases like empty lists and single-element lists, which are trivially palindromes.
+
+How to Use:
+Initialize a singly linked list.
+Use the isPalindrome() function to check if the list is a palindrome.
+The function returns true if the list is a palindrome and false otherwise.
