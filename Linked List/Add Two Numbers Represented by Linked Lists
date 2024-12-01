@@ -1,0 +1,64 @@
+class Solution {
+    private:
+     Node* reverse(Node* head) {
+    Node* prev = NULL;
+    Node* curr = head;
+    Node* next = NULL;
+    while (curr != NULL) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;  // Return the new head of the reversed list
+}
+
+   void insertAtTail(Node* &head, Node*&tail ,int val){
+    Node* temp = new Node(val);  // Create new node
+    if (head == NULL) {
+        head = temp;  // If the list is empty, head and tail both point to the new node.
+        tail = temp;
+        return;
+    } else {
+        tail->next = temp;  // Otherwise, link the new node at the end.
+        tail = temp;  // Update the tail pointer to the new node.
+    }
+}
+
+  Node* add(Node* first, Node* second) {
+    int carry = 0;
+    Node* ansHead = NULL;
+    Node* ansTail = NULL;
+    
+    // Iterate over both lists
+    while (first != NULL || second != NULL || carry != 0) {
+        int val1 = 0;
+        if (first != NULL) {
+            val1 = first->data;
+        }
+        int val2 = 0;
+        if (second != NULL) {
+            val2 = second->data;
+        }
+        int sum = carry + val1 + val2;  // Sum of the current digits + carry
+        int digit = sum % 10;  // Extract the digit (remainder)
+        insertAtTail(ansHead, ansTail, digit);  // Insert the digit at the tail of the result list
+        carry = sum / 10;  // Carry for the next iteration
+        
+        if (first != NULL) first = first->next;
+        if (second != NULL) second = second->next;
+    }
+    
+    return ansHead;
+}
+
+  public:
+    // Function to add two numbers represented by linked list.
+    Node* addTwoLists(Node* first, Node* second) {
+   first=reverse(first);
+   second=reverse(second);
+   Node*ans=add(first,second);
+   ans=reverse(ans);
+   return ans;
+    }
+};
