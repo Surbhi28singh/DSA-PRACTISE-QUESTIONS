@@ -1,0 +1,58 @@
+Node<int> *solve(Node<int> * first,Node<int>  *second){
+    if(first->next==NULL){
+        first->next=second;
+    }
+    Node<int> * curr1=first;
+    Node<int> *next1=curr1->next;
+    Node<int> *curr2=second;
+    Node<int> * next2=curr2->next;
+    while(next1!= NULL && curr2!=NULL){
+if((curr2->data>=curr1->data) &&(curr2->data<=next1->data)){
+    curr1->next=curr2;
+    next2=curr2->next;
+    curr2->next=next1;
+    curr1=curr2;
+    curr2=next2;
+}
+else{
+    curr1=next1;
+    next1=next1->next;
+    if(next1==NULL){
+    curr1->next=curr2;
+    return first;
+    }
+}
+    }   
+    return first;
+}
+
+Node<int> *sortTwoLists(Node<int> *first, Node<int> *second) {
+ if(first==NULL)
+ return second;
+ if(second==NULL)
+ return first;
+ if(first->data<=second->data){
+    return solve(first,second);
+ }
+ else{
+     return solve(second,first);
+ }
+}
+//This repository contains a C++ implementation for merging two sorted singly linked lists into a single sorted list. The solution efficiently combines the two lists by comparing the nodes' data and linking them in ascending order.
+
+Key Features:
+Merging Sorted Lists: The core functionality merges two sorted linked lists, ensuring that the merged list maintains a sorted order.
+Efficient Solution: The implementation uses a constant amount of extra space (apart from the input lists) and processes each node exactly once, making it optimal with O(m + n) time complexity.
+Edge Case Handling: The algorithm handles cases where either of the lists is empty.
+How It Works:
+The solution uses a solve() function that:
+
+Takes two sorted linked lists (first and second) as input.
+Merges them into a single sorted list by comparing the node values one by one.
+The merged list is returned with the smaller node values appearing first.
+The sortTwoLists() function handles edge cases where one of the lists might be empty and invokes the solve() function to merge the lists.
+
+Usage:
+Initialize two sorted linked lists.
+Call the sortTwoLists() function to merge the two lists.
+The merged list will be returned as a new sorted linked list.
