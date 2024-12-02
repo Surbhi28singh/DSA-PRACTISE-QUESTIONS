@@ -1,0 +1,63 @@
+node*getMid(node*head){
+    node* slow=head;
+    node* fast=slow->next;
+    while(fast!=NULL && fast->next!=NULL){
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    return slow;
+}
+node*merge(node *left ,node *right){
+    if(left==NULL){
+        return right;
+
+    }
+    if(right==nullptr){
+        return left;
+    }
+    node*ans=new node(-1);
+    node*temp=ans;
+    while(left!=NULL && right!=NULL){
+        if(left->data<right->data){
+            temp->next=left;
+            temp=left;
+            left=left->next;
+        }
+        else{
+            temp->next=right;
+            temp=right;
+            right=right->next;  
+        }
+    }
+    while(left!=NULL){
+          temp->next=left;
+            temp=left;
+            left=left->next;
+    }
+     while(right!=NULL){
+          temp->next=right;
+            temp=right;
+            right=right->next;
+    }
+    ans=ans->next;
+    return ans;
+}
+node* mergeSort(node *head){
+if(head==NULL || head->next==NULL){
+    return head;
+}
+node*mid=getMid(head);
+node*left=head;
+node*right=mid->next;
+mid->next=NULL;
+left=mergeSort(left);
+right=mergeSort(right);
+node*result=merge(left,right);
+return result;
+}  
+//This repository provides a C++ implementation of the merge sort algorithm for sorting a singly linked list. The implementation includes:
+
+getMid(): A function to find the middle node of the list.
+merge(): A function to merge two sorted linked lists.
+mergeSort(): A recursive function that splits and sorts the linked list using merge sort.
+This code can be used to sort linked lists in O(n log n) time complexity.
