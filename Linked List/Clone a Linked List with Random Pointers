@@ -1,0 +1,195 @@
+//approach1//
+class Solution {
+    private:
+    Node *insertAtTail(Node* &head,Node* &tail,int d){
+        Node*newnode=new Node(d);
+        if(head==NULL){
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail->next=newnode;
+            tail=newnode;
+            
+        }
+    }
+    
+  public:
+    Node *copyList(Node *head) {
+        Node*cloneHead=NULL;
+        Node*cloneTail=NULL;
+        Node*temp=head;
+        while(temp!=NULL){
+            insertAtTail(cloneHead,cloneTail,temp->data);
+            temp=temp->next;
+        }
+        unordered_map<Node*,Node*>OldToNew;
+        Node*original=head;
+        Node*clone=cloneHead;
+        while(original!=NULL&&clone!=NULL){
+          OldToNew[original]=clone;
+          original=original->next;
+          clone=clone->next;
+        }
+        original=head;
+        clone=cloneHead;
+        while(original!=NULL &&clone!=NULL){
+            clone->random=OldToNew[original->random];
+            original=original->next;
+            clone=clone->next;
+        }
+        return cloneHead;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int T;
+    cin >> T;
+    cin.ignore(); // Ignore the newline after T
+    while (T--) {
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        vector<int> arr;
+        int number;
+        while (ss >> number) {
+            arr.push_back(number);
+        }
+
+        Node *head = NULL, *tail = NULL;
+        for (int i = 0; i < arr.size(); ++i) {
+            append(&head, &tail, arr[i]);
+        }
+
+        getline(cin, input);
+        stringstream ss2(input);
+        vector<int> arr2;
+        while (ss2 >> number) {
+            arr2.push_back(number);
+        }
+
+        Node *temp = head;
+        for (int i = 0; i < arr2.size(); i += 2) {
+            int a = arr2[i];
+            int b = arr2[i + 1];
+
+            Node *tempA = head;
+            Node *tempB = head;
+            for (int j = 1; j < a; ++j) {
+                tempA = tempA->next;
+            }
+            for (int j = 1; j < b; ++j) {
+                tempB = tempB->next;
+            }
+
+            tempA->random = tempB;
+        }
+
+        Solution ob;
+        Node *res = ob.copyList(head);
+        if (!res or res == head) {
+            cout << "false" << endl;
+            continue;
+        }
+        if (validation(head, res)) {
+            cout << "true" << endl;
+        } else {
+            cout << "false" << endl;
+        }
+        cout << "~\n";
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+//approach2//
+class Solution {
+private:
+    Node* insertAtTail(Node*& head, Node*& tail, int d) {
+        Node* newnode = new Node(d);
+        if (head == NULL) {
+            head = newnode;
+            tail = newnode;
+        } else {
+            tail->next = newnode;
+            tail = newnode;
+        }
+        return newnode;
+    }
+
+public:
+    Node* copyList(Node* head) {
+        if (head == NULL) return NULL;  // Handle edge case for empty list
+
+        // Step 1: Create the cloned list
+        Node* cloneHead = NULL;
+        Node* cloneTail = NULL;
+        Node* temp = head;
+
+        while (temp != NULL) {
+            insertAtTail(cloneHead, cloneTail, temp->data);
+            temp = temp->next;
+        }
+
+        // Step 2: Merge the original list with the cloned list
+        Node* original = head;
+        Node* clone = cloneHead;
+        while (original != NULL && clone != NULL) {
+            Node* nextOriginal = original->next;
+            original->next = clone;
+
+            Node* nextClone = clone->next;
+            clone->next = nextOriginal;
+
+            original = nextOriginal;
+            clone = nextClone;
+        }
+
+        // Step 3: Assign the `random` pointers for the cloned list
+        original = head;
+        clone = cloneHead;
+        while (original != NULL) {
+            if (original->random) {
+                clone->random = original->random->next;
+            }
+            original = original->next ? original->next->next : NULL;
+            clone = clone->next ? clone->next->next : NULL;
+        }
+
+        // Step 4: Restore the original list and extract the cloned list
+        original = head;
+        clone = cloneHead;
+
+        while (original != NULL && clone != NULL) {
+            original->next = clone->next;
+            original = original->next;
+
+            if (original != NULL) {
+                clone->next = original->next;
+            }
+
+            clone = clone->next;
+        }
+
+        return cloneHead;  // Return the cloned list's head
+    }
+};
+//This repository contains an implementation of the problem to clone a linked list that contains random pointers in addition to the next pointer. The solution includes two approaches for efficiently cloning the list.
+
+Approach 1 uses an auxiliary hash map (unordered_map) to store mappings between original nodes and their cloned counterparts. It first creates a deep copy of the list, and then assigns random pointers based on the stored mappings.
+
+Approach 2 merges the original list with its cloned version by inserting the cloned nodes in between the original nodes. It then assigns the random pointers and restores the original list in the end, providing a more efficient solution without using extra space.
+
+Both approaches ensure that the cloned list maintains the correct structure, including the random pointers.
+
+Key Features:
+Handles edge cases such as empty lists.
+Restores the original list after cloning.
+Efficient memory management by using two different methods of cloning.
+Supports validation to check if the cloned list is correct.
+Use Cases:
+Cloning complex linked lists with random pointers.
+Learning how to handle special pointers in data structures.
+Implementing deep copy algorithms in C++.
