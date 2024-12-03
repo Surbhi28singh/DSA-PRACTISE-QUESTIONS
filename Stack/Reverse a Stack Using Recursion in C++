@@ -1,0 +1,25 @@
+void insertAtBottom(stack<int> &s,int element){
+    if(s.empty()){
+     s.push(element);
+     return;
+    }
+    int num=s.top();
+    s.pop();
+    insertAtBottom(s,element);
+    s.push(num);
+}
+void reverseStack(stack<int> &stack) {
+   if(stack.empty()){
+       return ;
+   }
+   int num=stack.top();
+   stack.pop();
+   reverseStack(stack);
+   insertAtBottom(stack,num);
+}
+//This C++ program demonstrates how to reverse a stack using recursion. The algorithm works by repeatedly popping elements from the stack, recursively reversing the remaining stack, and then inserting the popped elements at the bottom of the stack to achieve the reversed order.
+
+Features:
+Recursive Stack Reversal: Utilizes recursion to reverse the elements of a stack.
+Efficient Manipulation: The insertAtBottom function places elements at the bottom of the stack, which is used to reverse the order of elements.
+No Extra Data Structures: The reversal is done using the stack itself, without requiring additional data structures like queues or arrays.
