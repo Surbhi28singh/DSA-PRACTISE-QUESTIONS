@@ -1,0 +1,28 @@
+#include <bits/stdc++.h> 
+void insertSorted(stack<int> &stack,int num){
+	if(stack.empty()||(!stack.empty()&&stack.top()<num)){
+      stack.push(num);
+	  return ;
+	}
+	int n=stack.top();
+	stack.pop();
+	insertSorted(stack, num);
+	stack.push(n);
+}
+void sortStack(stack<int> &stack)
+{
+	if(stack.empty()){
+		return ;
+	}
+	int num=stack.top();
+    stack.pop();
+	sortStack(stack);
+	insertSorted(stack,num);
+
+}
+//This C++ program demonstrates how to sort a stack in ascending order using recursion. The algorithm recursively pops elements from the stack, and then inserts them back into the stack in the correct sorted order. It uses a helper function insertSorted to place elements in their correct position while maintaining the stack's order.
+
+Features:
+Recursive Sorting: Utilizes recursion to sort the stack without using any additional data structures like arrays or queues.
+Efficient Stack Manipulation: Elements are inserted into the stack in a sorted manner using the helper function insertSorted.
+Maintains Stack Properties: The solution only uses the stack for sorting, preserving its structure and properties.
