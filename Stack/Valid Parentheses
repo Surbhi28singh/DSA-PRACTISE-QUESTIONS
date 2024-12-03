@@ -1,0 +1,41 @@
+bool isValidParenthesis(string s)
+{
+    stack<char>st;
+    for (int i = 0; i<s.length(); i++) {
+      char ch = s[i];
+      if(ch=='{'||ch=='['||ch=='('){
+          st.push(ch);
+      }
+      else{
+          if (!st.empty()) {
+              char top= st.top();
+              if ((top == '{' && ch == '}') || (top=='['&& ch==']') || (top =='('&& ch==')')){
+                  st.pop();
+              }
+              else{
+                  return false;
+              }
+          }
+          else{
+              return false;
+          }
+      }
+
+    }
+    if(st.empty()){
+      return true;
+    }
+    else{
+        return false;
+    }
+}
+//This repository contains a C++ program that checks if a given string of parentheses is valid. The string is considered valid if:
+
+Every opening parenthesis ((, {, [) has a corresponding closing parenthesis (), }, ]).
+The parentheses are correctly nested and closed in the right order.
+The program uses a stack data structure to perform this check, utilizing the LIFO (Last In, First Out) property of stacks to ensure proper matching of parentheses.
+
+Features:
+Stack-based Approach: The program uses a stack to store opening parentheses and checks if each closing parenthesis matches the top element of the stack.
+Efficient Validation: It runs in O(n) time complexity, where n is the length of the string, as it processes each character once.
+Handles Nested Parentheses: Supports correctly matching parentheses even when nested.
