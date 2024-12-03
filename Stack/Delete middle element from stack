@@ -1,0 +1,28 @@
+void solve(stack<int>&inputStack, int count,int size){
+//base case
+if(count==size/2){
+   inputStack.pop();
+   return;
+}
+int num=inputStack.top();
+inputStack.pop();
+solve(inputStack,count+1,size);
+inputStack.push(num);
+
+}
+void deleteMiddle(stack<int>&inputStack, int N){
+	int count=0;
+   solve(inputStack,count,N);
+ 
+   
+}
+//This C++ program demonstrates how to delete the middle element of a stack using recursion. The algorithm works by recursively popping elements until the middle element is reached, which is then removed. After that, the other elements are pushed back in the correct order.
+
+Features:
+Recursion-Based Solution: Uses recursion to navigate through the stack and identify the middle element.
+Efficient Stack Manipulation: The middle element is deleted, and the remaining elements are restored back into the stack.
+Stack Operations: The program handles basic stack operations like push, pop, and top to manipulate the stack.
+Explanation:
+The solve function recursively pops elements from the stack until it reaches the middle element, which it then removes.
+The deleteMiddle function acts as an entry point to the recursion, passing the initial stack and its size.
+The program works by identifying the middle element using a counter and removes it, maintaining the order of the remaining elements.
