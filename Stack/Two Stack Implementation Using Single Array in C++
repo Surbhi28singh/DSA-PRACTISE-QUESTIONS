@@ -1,0 +1,68 @@
+class TwoStack {
+int *arr;
+int top1;
+int top2;
+int size;
+public:
+
+    // Initialize TwoStack.
+    TwoStack(int s) {
+      this->size=s;
+      top1=-1;
+      top2=s;
+      arr=new int[s];
+    }
+    
+    // Push in stack 1.
+    void push1(int num) {
+        if(top2-top1>1){
+            top1++;
+            arr[top1]=num;
+        }
+    }
+
+    // Push in stack 2.
+    void push2(int num) {
+         if(top2-top1>1){
+            top2--;
+            arr[top2]=num;
+        }
+    }
+
+    // Pop from stack 1 and return popped element.
+    int pop1(){
+        if(top1>=0){
+            int ans=arr[top1];
+            top1--;
+            return ans;
+        }
+        else{
+            return -1;
+        }
+    }
+
+    // Pop from stack 2 and return popped element.
+    int pop2() {
+          if(top2<size){
+            int ans=arr[top2];
+            top2++;
+            return ans;
+            
+        }
+        else{
+            return -1;
+        }
+    }
+};
+//This repository contains a C++ implementation of two stacks using a single array. The two stacks share the same array, but one stack grows from the left (stack 1) while the other grows from the right (stack 2). This approach efficiently utilizes space and ensures that both stacks operate independently without the need for separate arrays.
+
+Features:
+Push Operation: Adds elements to either of the two stacks.
+Pop Operation: Removes and returns the top element from either stack.
+Overflow and Underflow Handling: Prevents stack overflow and underflow by checking conditions.
+Space Optimization: Uses a single array to store both stacks, dynamically growing from opposite ends.
+Methods:
+push1(int num): Pushes an element onto stack 1.
+push2(int num): Pushes an element onto stack 2.
+pop1(): Pops an element from stack 1.
+pop2(): Pops an element from stack 2.
