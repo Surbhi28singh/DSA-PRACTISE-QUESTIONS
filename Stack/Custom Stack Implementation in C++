@@ -1,0 +1,75 @@
+//This repository contains a custom stack implementation in C++ using an array. The stack has the following operations:
+
+push(int element): Adds an element to the top of the stack.
+pop(): Removes the top element from the stack.
+peek(): Returns the top element of the stack without removing it.
+isEmpty(): Checks if the stack is empty.
+It includes error handling for stack overflow and stack underflow, and demonstrates how to use these functions in a sample program.//
+#include<stack>
+#include <iostream>
+using namespace std;
+class Stack{
+    //properties
+    public:
+    int top;
+    int *arr;
+    int size;
+    //behaviour
+    Stack(int size){
+        this->size=size;
+        arr=new int[size];
+        top=-1;
+    }
+    void push(int element){
+        if(size-top>1){
+            top++;
+            arr[top]=element;
+    }
+    else{
+       cout<<"stack overflow"<<endl; 
+    }
+    }
+     void pop(){
+        if(top>=0){
+            top--;
+    }
+    else{
+       cout<<"stack underflow"<<endl; 
+    }
+    }
+     int peek(){
+        if(top>=0 && top<size){
+           
+           return arr[top];
+    }
+    else{
+       cout<<"stack underflow"<<endl; 
+    }
+    }
+    bool isEmpty(){
+        if(top==-1){
+            cout<<"stack is empty"<<endl;
+            return true;
+        }
+        else{
+            cout<<"stack is not empty"<<endl; 
+            return false;
+        }
+    }
+    
+};
+int main(){
+Stack s1(4);
+   s1.push(2);
+   s1.push(3);
+   s1.push(4);
+   s1.push(9);
+   s1.push(10);
+   s1.pop();
+   cout<<"top element is"<<s1.peek()<<endl;
+    s1.pop();
+    cout<<"top element is"<<s1.peek()<<endl;
+    s1.pop();
+    cout<<"top element is"<<s1.peek()<<endl;
+    return 0;
+}
