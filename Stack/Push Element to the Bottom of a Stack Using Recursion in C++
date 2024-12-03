@@ -1,0 +1,23 @@
+void solve(stack<int>& s, int x){
+  if (s.empty()) {
+    s.push(x);
+    return;
+  }
+    int num=s.top();
+    s.pop();
+    solve(s,x);
+    s.push(num);
+}
+stack<int> pushAtBottom(stack<int>& myStack, int x) 
+{
+  
+  
+   solve(myStack,x);
+   return myStack;
+}
+//This C++ program demonstrates how to push an element to the bottom of a stack using recursion. The algorithm uses the stack's LIFO (Last In, First Out) property to recursively pop elements until the stack is empty, then pushes the target element at the bottom and restores the other elements back in the original order.
+
+Features:
+Recursive Approach: Uses recursion to place an element at the bottom of the stack while maintaining the order of other elements.
+Efficient Stack Manipulation: The element is inserted at the bottom without using any additional data structures, ensuring the stack properties are preserved.
+Handles Stack Operations: Demonstrates basic stack operations such as push, pop, and top.
