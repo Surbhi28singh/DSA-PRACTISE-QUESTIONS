@@ -1,0 +1,23 @@
+#include<stack>
+vector<int> nextSmallerElement(vector<int> &arr, int n)
+{
+    stack<int>s;
+    s.push(-1);
+    vector<int>ans(n,-1);
+    for(int i=n-1;i>=0;i--){
+        int curr=arr[i];
+        while(s.top()>=curr){
+                s.pop();
+            }
+            if (!s.empty()) {
+                ans[i] = s.top();
+            }
+           s.push(curr);
+           
+        
+    }
+    return ans;
+}
+//This C++ program finds the next smaller element for each element in an array using a stack-based approach.
+It efficiently computes the next smaller element for each index in the given array, or -1 if no smaller element exists. The time complexity of this algorithm is O(n), where n is the number of elements in the array.
+
