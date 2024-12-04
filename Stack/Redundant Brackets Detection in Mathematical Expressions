@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool findRedundantBrackets(string &s)
+{
+    stack<char> st;
+    
+    for (int i = 0; i < s.length(); i++) {
+        char ch = s[i];
+        
+        if (ch == '(' || ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+            st.push(ch); 
+        } 
+        else if (ch == ')') {
+            bool isRedundant = true;   
+            
+            while (!st.empty() && st.top() != '(') {
+                char top = st.top();
+                if (top == '+' || top == '-' || top == '*' || top == '/') {
+                    isRedundant = false;  t
+                }
+                st.pop();  
+            }
+            
+
+            if (!st.empty())
+             st.pop();
+            
+            
+            if (isRedundant) {
+                return true;
+            }
+        }
+    }
+    
+    return false;  
+}
+//This C++ program detects redundant parentheses in mathematical expressions. It uses a stack-based approach to identify unnecessary
+parentheses that do not affect the result of the expression. 
+The program checks if there are any parentheses that can be removed without altering the meaning of the expression, making the code cleaner and more efficient.
+
