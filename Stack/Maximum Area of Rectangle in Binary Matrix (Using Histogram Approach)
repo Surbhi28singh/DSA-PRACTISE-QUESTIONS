@@ -1,0 +1,93 @@
+#include <vector>
+#include <stack>
+#include <algorithm>
+#include <climits>
+using namespace std;
+
+class Solution {
+private:
+    // Function to find the next smaller element for each index in the histogram
+    vector<int> nextSmaller(vector<int>& arr, int n) {
+        stack<int> s;
+        s.push(-1);  // Add a sentinel value
+        vector<int> ans(n);
+        for (int i = n - 1; i >= 0; i--) {
+            int curr = arr[i];
+            // Pop elements from the stack that are greater than or equal to the current element
+            while (s.top() != -1 && arr[s.top()] >= curr) {
+                s.pop();
+            }
+            ans[i] = s.top();  // Set the next smaller element's index
+            s.push(i);  // Push the current index to the stack
+        }
+        return ans;
+    }
+
+    // Function to find the previous smaller element for each index in the histogram
+    vector<int> prevSmaller(vector<int>& arr, int n) {
+        stack<int> s;
+        s.push(-1);  // Add a sentinel value
+        vector<int> ans(n);
+        for (int i = 0; i < n; i++) {
+            int curr = arr[i];
+            // Pop elements from the stack that are greater than or equal to the current element
+            while (s.top() != -1 && arr[s.top()] >= curr) {
+                s.pop();
+            }
+            ans[i] = s.top();  // Set the previous smaller element's index
+            s.push(i);  // Push the current index to the stack
+        }
+        return ans;
+    }
+
+    // Function to calculate the largest rectangle area in a histogram
+    int largestRectangle(vector<int>& heights) {
+        int n = heights.size();
+        vector<int> next = nextSmaller(heights, n);
+        vector<int> prev = prevSmaller(heights, n);
+        int area = INT_MIN;
+
+        for (int i = 0; i < n; i++) {
+            int l = heights[i];  // Height of the bar at index i
+            if (next[i] == -1) {
+                next[i] = n;  // If there's no next smaller element, treat it as the end of the array
+            }
+            int b = next[i] - prev[i] - 1;  // Width of the rectangle formed by the current bar
+            int newArea = l * b;  // Area of the rectangle
+            area = max(area, newArea);  // Update the maximum area
+        }
+        return area;
+    }
+
+public:
+    // Function to calculate the maximum area of a rectangle formed by 1's in the given matrix
+    int maxArea(vector<vector<int>>& mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        int area = 0;
+
+        // Iterate over each row of the matrix
+        for (int i = 0; i < n; i++) {
+            // Update the matrix to represent the histogram of 1's up to the current row
+            for (int j = 0; j < m; j++) {
+                if (mat[i][j] == 1 && i > 0) {
+                    mat[i][j] += mat[i - 1][j];  // Increment the height for 1's
+                }
+                // If it's 0, reset the height to 0
+            }
+
+            // Calculate the maximum area for the histogram formed by the current row
+            area = max(area, largestRectangle(mat[i]));
+        }
+
+        return area;  // Return the maximum area found
+    }
+};
+//This repository contains a solution to the problem of finding the maximum area of a rectangle formed by 1's in a binary matrix.
+The solution leverages a histogram-based approach, where each row of the matrix is treated as a histogram, and the largest rectangle 
+area is computed using monotonic stacks.
+
+Key Features:
+Efficiently solves the problem with a time complexity of O(n * m), where n is the number of rows and m is the number of columns in the matrix.
+Utilizes next smaller and previous smaller element algorithms with stacks to calculate the largest rectangle in a histogram.
+Handles binary matrices of varying sizes and finds the maximum rectangle area formed by 1's.
