@@ -1,0 +1,134 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Deque
+{
+    int* arr;
+    int front;
+    int rear;
+    int size;
+
+public:
+    // Initialize your data structure.
+    Deque(int n)
+    {
+        size = n;
+        arr = new int[n];
+        front = rear = -1;
+    }
+
+    // Pushes 'X' in the front of the deque. Returns true if it gets pushed into the deque, and false otherwise.
+    bool pushFront(int x)
+    {
+        if ((front == 0 && rear == size - 1) || (rear == (front - 1 + size) % size)) {
+            return false; // Deque is full
+        } else if (front == -1) {
+            front = rear = 0;
+        } else if (front == 0) {
+            front = size - 1;
+        } else {
+            front--;
+        }
+        arr[front] = x;
+        return true;
+    }
+
+    // Pushes 'X' in the back of the deque. Returns true if it gets pushed into the deque, and false otherwise.
+    bool pushRear(int x)
+    {
+        if ((front == 0 && rear == size - 1) || (rear == (front - 1 + size) % size)) {
+            return false; // Deque is full
+        } else if (front == -1) {
+            front = rear = 0;
+        } else if (rear == size - 1) {
+            rear = 0;
+        } else {
+            rear++;
+        }
+        arr[rear] = x;
+        return true;
+    }
+
+    // Pops an element from the front of the deque. Returns -1 if the deque is empty, otherwise returns the popped element.
+    int popFront()
+    {
+        if (front == -1) {
+            return -1; // Deque is empty
+        }
+        int ans = arr[front];
+        arr[front] = -1; // Mark it as empty
+        if (front == rear) {
+            front = rear = -1; // Deque is empty
+        } else if (front == size - 1) {
+            front = 0;
+        } else {
+            front++;
+        }
+        return ans;
+    }
+
+    // Pops an element from the back of the deque. Returns -1 if the deque is empty, otherwise returns the popped element.
+    int popRear()
+    {
+        if (front == -1) {
+            return -1; // Deque is empty
+        }
+        int ans = arr[rear];
+        arr[rear] = -1; // Mark it as empty
+        if (front == rear) {
+            front = rear = -1; // Deque is empty
+        } else if (rear == 0) {
+            rear = size - 1;
+        } else {
+            rear--;
+        }
+        return ans;
+    }
+
+    // Returns the first element of the deque. If the deque is empty, it returns -1.
+    int getFront()
+    {
+        if (isEmpty()) {
+            return -1; // Deque is empty
+        }
+        return arr[front];
+    }
+
+    // Returns the last element of the deque. If the deque is empty, it returns -1.
+    int getRear()
+    {
+        if (isEmpty()) {
+            return -1; // Deque is empty
+        }
+        return arr[rear];
+    }
+
+    // Returns true if the deque is empty. Otherwise returns false.
+    bool isEmpty()
+    {
+        return front == -1; // If front is -1, the deque is empty
+    }
+
+    // Returns true if the deque is full. Otherwise returns false.
+    bool isFull()
+    {
+        return (front == 0 && rear == size - 1) || (front == rear + 1); // Deque is full
+    }
+};
+//This is a C++ implementation of a Circular Deque (Double-Ended Queue) that supports the following operations:
+
+pushFront(x): Inserts an element x at the front of the deque.
+pushRear(x): Inserts an element x at the rear of the deque.
+popFront(): Removes and returns the front element from the deque.
+popRear(): Removes and returns the rear element from the deque.
+getFront(): Returns the front element without removing it.
+getRear(): Returns the rear element without removing it.
+isEmpty(): Checks if the deque is empty.
+isFull(): Checks if the deque is full.
+This implementation ensures efficient insertion and deletion at both ends, using a circular array to maximize space utilization.
+The queue is implemented with a fixed-size array, with front and rear pointers maintaining the circular structure.
+
+Key Features:
+
+Constant time complexity (O(1)) for insertion and deletion operations at both ends.
+Efficient memory usage due to circular array design.
