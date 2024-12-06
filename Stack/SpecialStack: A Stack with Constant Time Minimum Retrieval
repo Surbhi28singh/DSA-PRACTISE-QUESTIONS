@@ -1,0 +1,67 @@
+class SpecialStack {
+
+    stack<int> s;
+    int mini;
+
+public:
+    // Push function: pushes an element into the stack and returns nothing
+    void push(int data) {
+        if (s.empty()) {
+            s.push(data);
+            mini = data;
+        } else {
+            if (data < mini) {
+                s.push(2 * data - mini);
+                mini = data;
+            } else {
+                s.push(data);
+            }
+        }
+    }
+
+    // Pop function: removes the top element from the stack and returns nothing
+    void pop() {
+        if (s.empty()) {
+            return;
+        }
+        
+        int curr = s.top();
+        s.pop();
+        
+        if (curr < mini) {
+            mini = 2 * mini - curr;
+        }
+    }
+
+    // Top function: returns the element at the top of the stack
+    int top() {
+        if (s.empty()) {
+            return -1;
+        }
+        
+        int curr = s.top();
+        if (curr < mini) {
+            return mini;
+        } else {
+            return curr;
+        }
+    }
+
+    // GetMin function: returns the smallest element in the stack
+    int getMin() {
+        if (s.empty()) {
+            return -1;
+        }
+        return mini;
+    }
+};
+SpecialStack: A Stack with Constant Time Minimum Retrieval
+//This repository contains an implementation of a SpecialStack class, which extends the functionality of a standard stack
+by providing constant-time retrieval of the minimum element in the stack. The class supports the following operations:
+
+push(data): Pushes an element onto the stack.
+pop(): Pops the top element from the stack.
+top(): Returns the top element of the stack.
+getMin(): Returns the minimum element in the stack in constant time.
+The SpecialStack uses a clever technique to track the minimum element without requiring additional memory or separate data structures, 
+providing an efficient solution for applications that need to frequently query the minimum value in a stack
