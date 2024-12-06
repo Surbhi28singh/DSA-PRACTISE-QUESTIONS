@@ -1,0 +1,68 @@
+#include <bits/stdc++.h> 
+class Queue {
+    int*arr;
+    int qfront;
+    int rear;
+    int size;
+public:
+    Queue() {
+        size=100001;
+        arr=new int[size];
+        qfront=0;
+        rear=0;
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        if(qfront==rear){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    void enqueue(int data) {
+        if(rear==size){
+            cout<<"queue is full"<<endl;
+        }
+        else{
+            arr[rear]=data;
+            rear++;
+        }
+    }
+
+    int dequeue() {
+       if(qfront==rear){
+           return -1;
+       }
+       else{
+           int ans=arr[qfront];
+           
+           qfront++;
+           if(qfront ==rear){
+               qfront=0;
+               rear=0;
+           }
+           return ans;
+       }
+    }
+
+    int front() {
+        if(qfront==rear){
+            return -1;
+        }
+        else{
+            return arr[qfront];
+        }
+    }
+};
+//This repository contains an implementation of a queue data structure using a dynamic array in C++. The Queue class supports the following functionalities:
+
+isEmpty(): Checks if the queue is empty.
+enqueue(data): Adds an element to the rear of the queue.
+dequeue(): Removes and returns the front element from the queue.
+front(): Returns the front element of the queue without removing it.
+The implementation uses a dynamic array to store the queue elements and efficiently manages the front and rear pointers. It handles edge cases like queue 
+overflow and underflow, ensuring smooth operation. This queue implementation is ideal for scenarios that require a simple, fixed-size queue with basic operations.
