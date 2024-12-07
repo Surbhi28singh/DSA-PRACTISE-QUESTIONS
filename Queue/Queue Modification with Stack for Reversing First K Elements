@@ -1,0 +1,37 @@
+class Solution
+{
+    public:
+    
+    queue<int> modifyQueue(queue<int> q, int k) {
+        stack<int>s;
+        for(int i=0;i<k;i++){
+            int val=q.front();
+            q.pop();
+            s.push(val);
+        }
+        while(!s.empty()){
+            int val=s.top();
+            s.pop();
+            q.push(val);
+            
+        }
+        int t=q.size()-k;
+        while(t--){
+            int val=q.front();
+            q.pop();
+            q.push(val);
+        }
+        return q;
+    }
+};
+//This solution reverses the first k elements of a queue and rotates the remaining elements to maintain their order.
+The algorithm utilizes a stack to reverse the first k elements and then uses the queue to handle the remaining elements efficiently.
+
+Approach:
+
+Reverse First K Elements: The first k elements of the queue are pushed into a stack to reverse their order.
+Reinsert Reversed Elements: The elements are popped from the stack and pushed back into the queue, which places them at the front of the queue.
+Rotate Remaining Elements: The rest of the queue elements are rotated by moving them to the back of the queue to maintain their order.
+Return the Modified Queue: After processing, the modified queue is returned.
+Time Complexity: O(n)
+Space Complexity: O(k)
