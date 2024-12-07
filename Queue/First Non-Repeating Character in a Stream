@@ -1,0 +1,41 @@
+class Solution {
+  public:
+  
+  
+    string FirstNonRepeating(string &s) {
+       unordered_map<char,int>count;
+       queue<int>q;
+       string ans="";
+       for(int i=0;i<s.length();i++){
+           char ch=s[i];
+           count[ch]++;
+           q.push(ch);
+            
+            while(!q.empty()){
+                if(count[q.front()]>1){
+                    q.pop();
+                }
+                else{
+                    ans.push_back(q.front());
+                    break;
+                }
+                if(q.empty())
+                ans.push_back('#');
+            }
+       }
+     return ans;
+    }
+}
+This solution efficiently finds the first non-repeating character in a stream of characters (a given string). 
+It utilizes an unordered map to keep track of character frequencies and a queue to maintain the order of characters as they appear.
+As the stream is processed, the solution ensures that we can quickly identify the first non-repeating character or return # if no such character exists at any point in time.
+
+Approach:
+Track Character Frequencies: An unordered map is used to count the occurrences of each character.
+Queue to Maintain Order: A queue stores characters in the order they appear to allow efficient removal of repeated characters.
+Find Non-Repeating Character: For each character in the string, we update the map and the queue. The front of the queue is checked to see if it’s a non-repeating character. If not, it’s removed.
+Return Result: For each character in the stream, the first non-repeating character is added to the result string, or # is added if no non-repeating character exists.
+Time Complexity:
+O(n) for processing the string of length n, since each character is processed once.
+Space Complexity:
+O(n) for storing the frequency of characters and the queue.
