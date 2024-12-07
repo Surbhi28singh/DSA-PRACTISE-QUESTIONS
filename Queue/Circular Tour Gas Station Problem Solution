@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    int circularTour(vector<int>& a1, vector<int>& a2) {
+       queue<int>q;
+      int totalGas = 0;
+      int totalCost = 0;
+      int currentGas = 0;
+      int start = 0;
+     for(int i=0;i<a1.size();i++){
+        totalGas+=a1[i];
+        totalCost+=a2[i];
+         currentGas+=a1[i]-a2[i];
+         if(currentGas<0){
+             start=start+1;
+             currentGas=0;
+         }
+     }
+     return totalGas>totalCost?start:-1;
+    }
+};
+//This solution addresses the "Circular Tour Gas Station Problem," where a car needs to determine if it can complete a circular tour across a set of gas stations. Given two arrays:
+
+a1[]: Represents the gas available at each station.
+a2[]: Represents the cost of traveling to the next station.
+The goal is to return the index of the station from which the car can start and complete the circuit, or return -1 if it's impossible to complete the circuit.
+
+Key Approach:
+
+Use two variables to keep track of the total gas and the total cost.
+Track the current gas balance as you move through each station.
+Reset the starting station whenever currentGas becomes negative and attempt to start from the next station.
+If the total gas is sufficient to cover the total cost, return the starting station; otherwise, return -1.
+This approach runs in O(n) time complexity, making it efficient for large inputs.
