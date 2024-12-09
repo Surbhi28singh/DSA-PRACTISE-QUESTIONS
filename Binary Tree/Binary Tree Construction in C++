@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+class node{
+    public:
+    int data;
+    node*left;
+    node*right;
+    node(int data){
+        this->data=data;
+        this->left=NULL;
+        this->right=NULL;
+    }
+};
+node* buildTree(node*root){
+   cout<<"enter data :"<<endl;
+   int data;
+   cin>>data;;
+   root=new node(data);
+   if(data==-1){
+       return NULL;
+   }
+   cout<<"enter data for inserting in left of"<<data<<endl;
+   root->left=buildTree(root->left);
+   cout<<"enter data for inserting in right of"<<data<<endl;
+   root->right=buildTree(root->left);
+   return root;
+   
+}
+int main()
+{
+  node*root=NULL;
+  root=buildTree(NULL);
+    return 0;
+}
+//This repository contains a simple implementation of a binary tree in C++.
+The code allows the user to dynamically build a binary tree by entering node data for both left and right children.
+The buildTree function recursively creates nodes and attaches them to the tree based on user input. 
+The tree is constructed interactively by the user, and each node is initialized with its respective data. The repository demonstrates basic tree construction and pointer handling in C++.
+
+Key Features:
+
+Interactive binary tree construction
+Recursively builds tree nodes
+Handles user input for both left and right child nodes
+Demonstrates basic binary tree operations and memory management
