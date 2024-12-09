@@ -1,0 +1,29 @@
+void postOrder(BinaryTreeNode<int> *root,int &count){
+    if(root==NULL){
+        return ;
+        
+    }
+   
+    postOrder(root->left,count);
+    postOrder(root->right,count);
+    if(root->left==NULL && root->right==NULL){
+        count++;
+    }
+     
+}
+int noOfLeafNodes(BinaryTreeNode<int> *root) {
+    int cnt=0;
+postOrder(root,cnt);
+return cnt;
+}
+// This repository implements a function to count the number of leaf nodes in a binary tree using post-order traversal in C++.
+A leaf node is defined as a node that has no left or right children. The program includes a helper function (postOrder) that recursively t
+raverses the tree and counts leaf nodes as it processes the nodes from bottom to top.
+
+Key Features:
+Post-order Traversal: Recursively visits the left subtree, then the right subtree, and finally the current node.
+Leaf Node Counting: Specifically counts nodes that do not have left or right children.
+Efficient Count: Uses a reference to the count variable to update the leaf count directly during traversal.
+How to Use:
+postOrder: The function postOrder takes the root of the binary tree and a reference to a count variable. It traverses the tree in post-order and updates the count of leaf nodes.
+noOfLeafNodes: This function returns the total number of leaf nodes in the tree by calling the postOrder function and passing the root node.
