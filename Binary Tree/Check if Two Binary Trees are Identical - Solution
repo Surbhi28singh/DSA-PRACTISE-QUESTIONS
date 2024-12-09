@@ -1,0 +1,35 @@
+class Solution {
+  public:
+    // Function to check if two trees are identical.
+    bool isIdentical(Node *r1, Node *r2) {
+       if(r1==NULL && r2==NULL){
+           return true;
+       }
+       if(r1==NULL && r2!=NULL){
+           return false;
+       }
+      if(r1!=NULL && r2==NULL){
+           return false;
+       }
+    bool left=isIdentical(r1->left,r2->left);
+    bool right=isIdentical(r1->right,r2->right);
+    bool value =r1->data==r2->data;
+    if(left && right && value){
+        return true;
+    }
+    else{
+        return false;
+    }
+    
+    }
+};
+// This solution checks if two binary trees are identical or not. Two binary trees are identical if they have the same structure and the same data at each corresponding node.
+
+isIdentical(Node *r1, Node *r2): A function that checks whether the two trees rooted at r1 and r2 are identical by comparing their structure and node values recursively.
+Approach:
+Both trees are identical if:
+They are both empty (NULL), or
+They have the same root data and the left and right subtrees are also identical.
+The function compares the data at the nodes and recursively checks the left and right subtrees.
+Time Complexity: O(N), where N is the number of nodes in the smaller tree.
+Space Complexity: O(H), 
