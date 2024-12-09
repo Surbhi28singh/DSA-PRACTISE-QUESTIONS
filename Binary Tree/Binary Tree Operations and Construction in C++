@@ -1,0 +1,149 @@
+#include <iostream>
+#include<queue>
+using namespace std;
+class node{
+    public:
+    int data;
+    node*left;
+    node*right;
+    node(int data){
+        this->data=data;
+        this->left=NULL;
+        this->right=NULL;
+    }
+};
+node* buildTree(node*root){
+   cout<<"enter data :"<<endl;
+   int data;
+   cin>>data;;
+   root=new node(data);
+   if(data==-1){
+       return NULL;
+   }
+   cout<<"enter data for inserting in left of"<<data<<endl;
+   root->left=buildTree(root->left);
+   cout<<"enter data for inserting in right of"<<data<<endl;
+   root->right=buildTree(root->left);
+   return root;
+   
+}
+void levelOrderTraversal(node*root){
+    queue<node*>q;
+    q.push(root);
+    q.push(NULL);
+    while(!q.empty()){
+        node*temp=q.front();
+        q.pop();
+        if(temp==NULL){
+            cout<<endl;
+            if(!q.empty()){
+                q.push(NULL);
+            }
+    }
+    else{
+        cout<<temp->data<<" ";
+        if(temp->left){
+            q.push(temp->left);
+        }
+        if(temp->right){
+            q.push(temp->right);
+        }
+    }
+    }
+}
+
+void inOrder(node*root){
+    if(root==NULL){
+        return ;
+        
+    }
+    inOrder(root->left);
+    cout<<root->data<< " ";
+    inOrder(root->right);
+    
+}
+void preOrder(node*root){
+    if(root==NULL){
+        return ;
+        
+    }
+   
+    cout<<root->data<< " ";
+     preOrder(root->left);
+    preOrder(root->right);
+    
+}
+void postOrder(node*root){
+    if(root==NULL){
+        return ;
+        
+    }
+    postOrder(root->left);
+   
+    postOrder(root->right);
+     cout<<root->data;
+}
+void buildFromLevelOrder(node* &root){
+    queue<node*>q;
+    cout<<"enter data for root"<<endl;
+    int data;
+    cin>>data;
+    root=new node(data);
+    q.push(root);
+    while(!q.empty()){
+        node*temp=q.front();
+        q.pop();
+        cout<<"enter left node for:"<<temp->data<<endl; 
+        int leftData;
+        cin>>leftData;
+        if(leftData!=-1){
+            temp->left=new node (leftData);
+            q.push(temp->left);
+        }
+        cout<<"enter right node for:"<<temp->data<<endl; 
+        int rightData;
+        cin>>rightData;
+        if(rightData!=-1){
+            temp->left=new node (rightData);
+            q.push(temp->left);
+        }
+    }
+    
+}
+int main()
+{
+  node*root=NULL;
+  /*root=buildTree(NULL);
+  
+  cout<<"level order traversal:"<<endl;
+  levelOrderTraversal(root);
+  cout<<endl<<"inorder traversal:"<<endl;
+  inOrder(root);
+  cout<<endl<<"preorder traversal:"<<endl;
+  preOrder(root);
+  cout<<endl<<"postorder traversal:"<<endl;
+  postOrder(root);
+  */
+  buildFromLevelOrder(root);
+    return 0;
+}
+//This repository contains an implementation of binary tree operations in C++.
+The code provides functions for building a binary tree both interactively (using recursive input) and using level-order (breadth-first) input.
+It also demonstrates the following tree traversal methods:
+
+Level-order Traversal
+In-order Traversal
+Pre-order Traversal
+Post-order Traversal
+The repository includes two methods for constructing a binary tree:
+
+Recursive Tree Construction (User inputs data for each node and its children)
+Level-order Construction (User inputs the tree level-by-level)
+Key Features:
+
+Binary tree node structure with data and left-right pointers.
+Recursive and level-order methods to construct the binary tree.
+Tree traversal methods implemented:
+Level-order traversal using a queue.
+In-order, pre-order, and post-order traversal using recursion.
+Handles interactive user input for node data.
