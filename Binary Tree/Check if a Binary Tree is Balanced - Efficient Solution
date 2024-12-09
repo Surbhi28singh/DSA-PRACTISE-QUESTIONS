@@ -1,0 +1,39 @@
+class Solution {
+  public:
+    // Function to check whether a binary tree is balanced or not.
+    pair<bool,int>isBalancedFast(Node*root){
+        if(root==NULL){
+            pair<bool,int>p=make_pair(true,0);
+            return p;
+        }
+           pair<bool,int>left=isBalancedFast(root->left);
+           pair<bool,int>right=isBalancedFast(root->right);
+           bool leftans=left.first;
+           bool rightans=right.first;
+           bool diff=abs(left.second -right.second)<=1;
+           pair<bool,int>ans;
+           ans.second=max(left.second ,right.second)+1;
+           if(leftans && rightans&&diff){
+               ans.first=true;
+           }
+           else{
+               ans.first =false;
+           }
+           return ans;
+    }
+    bool isBalanced(Node* root) {
+        
+        return isBalancedFast(root).first;
+    }
+};
+Check if a Binary Tree is Balanced - Efficient Solution
+//This solution checks if a binary tree is balanced or not. A binary tree is balanced if the heights of the left and right subtrees of every node differ by at most 1. The approach uses a post-order traversal to calculate the height of each subtree and check the balance condition at every node.
+
+isBalancedFast(Node* root): A helper function that checks if the tree is balanced and returns a pair containing the balance status (true/false) and the height of the subtree rooted at the current node.
+isBalanced(Node* root): The main function that returns whether the binary tree is balanced by checking the first element (balance status) of the pair.
+Approach:
+For each node, the height of the left and right subtrees is calculated.
+The difference in height between the left and right subtrees is checked. If the difference is more than 1, the tree is not balanced.
+The function uses a recursive strategy to process each node and determine if the tree is balanced.
+Time Complexity: O(N), where N is the number of nodes in the tree.
+Space Complexity: O(H), where H is the height of the tree due to the recursion stack.
