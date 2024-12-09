@@ -1,0 +1,21 @@
+class Solution {
+  public:
+    // Function to find the height of a binary tree.
+    int height(struct Node* node) {
+        if(node==NULL){
+            return -1;
+        }
+        int left=height(node->left);
+        int right=height(node->right);
+        return max(left,right)+1;
+       
+    }
+};
+//This repository contains an implementation of a function to calculate the height of a binary tree in C++.
+The height of a tree is defined as the number of edges on the longest path from the root to a leaf node, where a leaf node is a node with no children. 
+This implementation uses a recursive approach to traverse the binary tree and calculate the height efficiently.
+
+Key Features:
+Height Calculation: The function computes the height of a binary tree by calculating the longest path from the root to any leaf node, counting edges.
+Recursive Approach: Uses recursion to calculate the height by traversing the left and right subtrees.
+Base Case Handling: Returns -1 for null nodes (as the height is measured in terms of edges).
