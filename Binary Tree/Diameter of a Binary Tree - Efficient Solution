@@ -1,0 +1,33 @@
+class Solution {
+  public:
+    pair<int, int> diameterFast(Node* root) {
+        if (root == NULL) {
+            return make_pair(0, 0);
+        }
+        
+        pair<int, int> left = diameterFast(root->left);
+        pair<int, int> right = diameterFast(root->right);
+        
+        int height = max(left.first, right.first) + 1;
+        int diameter = max(left.first + right.first, max(left.second, right.second));
+        
+        return make_pair(height, diameter);
+    }
+
+    int diameter(Node* root) {
+        return diameterFast(root).second;
+    }
+};
+
+//This solution calculates the diameter of a binary tree, which is defined as the longest path between any two leaf nodes in the tree.
+The function uses a recursive approach to compute both the height and diameter of each subtree. It returns the maximum diameter found during the traversal, 
+which may or may not pass through the root node.
+
+diameterFast(Node* root): A helper function that computes both the height and the diameter of the tree rooted at the current node.
+diameter(Node* root): The main function that returns the diameter of the entire binary tree.
+Approach:
+Height of a tree is the longest path from a node to a leaf node.
+Diameter is the longest path between two leaf nodes, which may or may not pass through the root of the tree.
+The recursive function calculates the height and diameter for each node's left and right subtrees and returns the maximum values.
+Time Complexity: O(N), where N is the number of nodes in the tree.
+Space Complexity: O(H), where H is the height of the tree due to recursion stack.
