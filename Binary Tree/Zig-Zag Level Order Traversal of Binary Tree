@@ -1,0 +1,69 @@
+class Solution{
+    public:
+    //Function to store the zig zag order traversal of tree in a list.
+    vector <int> zigZagTraversal(Node* root)
+    {
+        vector<int>result;
+    	if(root==NULL){
+    	    return result;
+    	}
+    	queue<Node*>q;
+    	q.push(root);
+    	bool direction=true;
+    	while(!q.empty()){
+    	    int size=q.size();
+    	    vector<int>ans(size);
+    	     
+    	    for(int i=0;i<size;i++){
+    	    Node*frontNode=q.front();
+    	    q.pop();
+    	   
+    	    int index=direction?i:size-i-1;
+    	    ans[index]=frontNode->data;
+    	    if(frontNode->left)
+    	        q.push(frontNode->left);
+    	    
+    	    if(frontNode->right)
+    	        q.push(frontNode->right);
+    	    }
+    	    
+    	    
+    	
+    	    direction=!direction;
+    	    for(auto i :ans){
+    	        result.push_back(i);
+    	    }
+    }
+    return result;
+    	}
+};
+//### GitHub Title:
+**"Zig-Zag Level Order Traversal of Binary Tree"**
+
+### GitHub Description:
+This repository provides a C++ solution for performing **Zig-Zag (or Spiral) Level Order Traversal** on a binary tree.
+The traversal alternates between left-to-right and right-to-left at each level, making it a zig-zag pattern. 
+The solution uses a queue to traverse the tree level by level and a boolean flag to switch directions for each level.
+
+### Key Features:
+- **Efficient Traversal**: Uses a queue to process nodes level by level.
+- **Alternating Directions**: Implements the zig-zag traversal pattern by alternating between left-to-right and right-to-left traversal at each level.
+- **Time Complexity**: The solution operates in O(n) time, where n is the number of nodes in the tree, as each node is processed once.
+
+### Usage:
+- Input: A binary tree represented by a `Node* root`.
+- Output: A vector of integers representing the nodes in zig-zag level order.
+
+### Example:
+```cpp
+Node* root = new Node(1);
+root->left = new Node(2);
+root->right = new Node(3);
+root->left->left = new Node(4);
+root->left->right = new Node(5);
+root->right->left = new Node(6);
+root->right->right = new Node(7);
+
+Solution sol;
+vector<int> result = sol.zigZagTraversal(root);  // Output: [1, 3, 2, 4, 5, 6, 7]
+```
