@@ -1,0 +1,40 @@
+class Solution {
+  public:
+  pair<bool,int> isSumTreeFast(Node*root){
+      if(root==NULL){
+      pair<bool,int>p=make_pair(true,0);
+      return p;
+          
+      }
+      if(root->left==NULL&& root->right==NULL){
+          pair<bool,int>p=make_pair(true,root->data);
+          return p;
+      }
+      pair<bool,int>left=isSumTreeFast(root->left);
+     pair<bool,int>right=isSumTreeFast(root->right);
+     bool leftAns=left.first;
+     bool rightAns=right.first;
+     int cond=root->data==left.second+right.second;
+     pair<bool,int>ans;
+     if(leftAns && rightAns && cond){
+         ans.first=true;
+         ans.second=2*root->data;
+     }
+     else{
+         ans.first=false;
+     }
+     return ans;
+
+  }
+    bool isSumTree(Node* root) {
+        return isSumTreeFast(root).first;
+    }
+};
+//This repository contains a C++ solution for checking if a given binary tree is a Sum Tree.
+A Sum Tree is a binary tree where the value of each node is the sum of the values of its left and right subtrees.
+The solution uses a recursive approach for efficient validation, ensuring the condition holds for every node in the tree.
+
+Key Features:
+Efficient Check: Uses a helper function isSumTreeFast() to compute both the sum of left and right subtrees while checking the condition in a single pass.
+Handles Edge Cases: Correctly handles cases for null nodes and leaf nodes.
+Time Complexity: The solution traverses the tree once, resulting in a time complexity of O(n), where n is the number of nodes in the tree.
