@@ -1,0 +1,48 @@
+class Solution
+{
+    public:
+    //Function to find the vertical order traversal of Binary Tree.
+    vector<int> verticalOrder(Node *root)
+    {
+        map<int,map<int,vector<int>>>nodes;
+        queue<pair<Node*,pair<int,int>>>q;
+        vector<int>ans;
+        if(root==NULL)
+        return ans;
+         q.push(make_pair(root, make_pair(0, 0)));
+        while(!q.empty()){
+            pair<Node*,pair<int,int>>temp=q.front();
+            q.pop();
+            Node*frontNode=temp.first;
+            int hd=temp.second.first;
+            int lvl=temp.second.second;
+            nodes[hd][lvl].push_back(frontNode->data);
+            if(frontNode->left)
+                q.push(make_pair(frontNode->left,make_pair(hd-1,lvl+1)));
+            if(frontNode->right)
+              q.push(make_pair(frontNode->right,make_pair(hd+1,lvl+1)));
+            }
+        
+        for(auto i:nodes){
+            for(auto j:i.second){
+                for(auto k:j.second){
+                    ans.push_back(k);
+                }
+            }
+        }
+        return ans;
+    }
+};
+//This solution implements the vertical order traversal of a binary tree. 
+The traversal is performed by first considering the horizontal distance and level of each node. 
+The nodes are then ordered by horizontal distance (left to right) and level (top to bottom), ensuring a correct vertical traversal of the tree.
+
+Key Features:
+The algorithm uses a map to store nodes grouped by their horizontal distance and level.
+A queue is used to perform a level-order traversal of the tree, updating the horizontal distance and level of each node as the tree is traversed.
+The result is then constructed by iterating over the map, extracting nodes in the correct order.
+Time Complexity:
+O(N log N), where N is the number of nodes in the binary tree, due to the sorting of nodes in the map.
+Space Complexity:
+O(N) for storing the nodes in the map and queue.
+This approach efficiently calculates the vertical order traversal of any given binary tree.
