@@ -1,0 +1,65 @@
+
+class Solution {
+  public:
+    // Function to traverse the left boundary (excluding leaf nodes)
+    void traverseLeft(Node* root, vector<int>& ans) {
+        if (root == NULL || (root->left == NULL && root->right == NULL)) {
+            return;
+        }
+        ans.push_back(root->data);
+        if (root->left) {
+            traverseLeft(root->left, ans); 
+        } else {
+            traverseLeft(root->right, ans); 
+        }
+    }
+
+    // Function to traverse the right boundary (excluding leaf nodes)
+    void traverseRight(Node* root, vector<int>& ans) {
+        if (root == NULL || (root->left == NULL && root->right == NULL)) {
+            return;
+        }
+        if (root->right) {
+            traverseRight(root->right, ans); 
+        } else {
+            traverseRight(root->left, ans); 
+        }
+        ans.push_back(root->data); 
+    }
+
+    // Function to traverse all leaf nodes
+    void traverseLeaf(Node* root, vector<int>& ans) {
+        if (root == NULL) 
+        return;
+        if (root->left == NULL && root->right == NULL) {
+            ans.push_back(root->data);
+            return;
+        }
+        traverseLeaf(root->left, ans);
+        traverseLeaf(root->right, ans);
+    }
+
+    // Function to perform boundary traversal
+    vector<int> boundaryTraversal(Node* root) {
+        vector<int> ans;
+        if (root == NULL) 
+        return ans;
+        
+        ans.push_back(root->data); 
+        
+        // Traverse the left boundary (excluding leaf nodes)
+        traverseLeft(root->left, ans);
+
+        // Traverse all the leaf nodes (both left and right children)
+        traverseLeaf(root, ans);
+
+        // Traverse the right boundary (excluding leaf nodes)
+        traverseRight(root->right, ans);
+
+        return ans;
+    }
+};
+//This solution performs the boundary traversal of a binary tree.
+The traversal includes the left boundary (excluding leaf nodes), all leaf nodes,
+and the right boundary (excluding leaf nodes). The result is returned as a list of integers representing the boundary nodes in the correct order. 
+The algorithm uses depth-first traversal for left and right boundaries, and a recursive approach to collect leaf nodes.
