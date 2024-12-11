@@ -1,0 +1,48 @@
+class Solution {
+  public:
+    vector <int> bottomView(Node *root) {
+       vector<int>ans;
+        if(root==NULL){
+            return ans;
+        }
+        map<int,int>topNode;
+        queue<pair<Node*,int>>q;
+        q.push(make_pair(root,0));
+        while(!q.empty()){
+            pair<Node*,int>temp=q.front();
+            q.pop();
+          Node* frontNode=temp.first;
+            int hd=temp.second;
+          
+                topNode[hd]=frontNode->data;
+            
+            if(frontNode->left)
+                q.push(make_pair(frontNode->left,hd-1));
+            
+            if(frontNode->right)
+                q.push(make_pair(frontNode->right,hd+1));
+        }
+        
+        for(auto i :topNode){
+            ans.push_back(i.second);
+        }
+        return ans;
+    }
+};
+//This C++ solution provides an efficient implementation to find the bottom view of a binary tree.
+The bottom view consists of the nodes that are visible when the binary tree is viewed from the bottom, ordered from left to right.
+
+Key Features:
+Utilizes Breadth-First Search (BFS) to traverse the binary tree level by level.
+Uses a map to store the last node seen at each horizontal distance (HD) from the root.
+For each level of the tree, the most recent node encountered at a given HD is stored, ensuring only the bottom-most node is included in the result.
+How it works:
+Map (topNode) is used to record the last node seen at each horizontal distance.
+A queue is used for level-order traversal, paired with the horizontal distance (hd) of each node.
+For each node:
+Its data is added to the map with the horizontal distance as the key, replacing any previous node at the same HD (ensuring the bottom-most node is recorded).
+The left child decreases the HD, and the right child increases it.
+After traversal, the bottom view nodes are extracted from the map and returned in the correct order.
+Time Complexity:
+O(N) where N is the number of nodes in the tree, as we traverse all nodes once.
+O(log N) for map operations, but this is negligible compared to the traversal complexity.
