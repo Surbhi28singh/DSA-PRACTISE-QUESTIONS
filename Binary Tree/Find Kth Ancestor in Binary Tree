@@ -9,7 +9,7 @@ Node* solve(Node*root,int &k ,int node){
     if(left!=NULL && right==NULL){
         k--;
         if(k<=0){
-            k=INT_MAX;
+           
             return root;
         }
         return left;
@@ -17,7 +17,7 @@ Node* solve(Node*root,int &k ,int node){
     if(left==NULL && right!=NULL){
         k--;
         if(k<=0){
-            k=INT_MAX;
+           
             return root;
         }
         return right;
@@ -28,11 +28,12 @@ Node* solve(Node*root,int &k ,int node){
 int kthAncestor(Node *root, int k, int node)
 {
     Node*ans=solve(root,k,node);
-    if(ans==NULL )
+    if(ans==NULL || k>0 )
     return -1;
     else
     return ans->data;
 }
+
 
 //This C++ solution finds the k-th ancestor of a given node in a binary tree. The approach utilizes a depth-first search (DFS) to
 traverse the tree and find the path leading to the target node. As we traverse, we decrement k until we reach the required ancestor, r
