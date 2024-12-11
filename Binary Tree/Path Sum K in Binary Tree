@@ -1,0 +1,37 @@
+class Solution {
+  public:
+  void solve(Node*root,vector<int>path,int & count,int k){
+      if(root==NULL)
+      return ;
+      path.push_back(root->data);
+      solve(root->left,path,count,k);
+      solve(root->right,path,count,k);
+      int size=path.size();
+      int sum=0;
+      for(int i=size-1;i>=0;i--){
+          sum+=path[i];
+          if(sum==k){
+              count++;
+          }
+      }
+      path.pop_back();
+      
+  }
+    int sumK(Node *root, int k) {
+        vector<int>path;
+        int count=0;
+        solve(root,path,count,k);
+        return count;
+    }
+};
+//This solution is an implementation of finding the number of paths in a binary tree that sum to a given target value k. 
+It uses a depth-first traversal approach, where paths from the root to any leaf node are explored. For each node, 
+the sum of the path from the node to the root is calculated and checked if it equals k. If the sum matches k, it increments the count.
+
+Features:
+Depth-First Search (DFS): Efficient traversal of the tree to explore all possible paths.
+Path Sum Calculation: Tracks the sum of values in the path dynamically.
+Time Complexity: O(N) where N is the number of nodes in the tree. The solution explores every node and its path.
+Usage:
+Create a Node structure to represent the tree.
+Call sumK(Node* root, int k) to find how many paths sum to k.
