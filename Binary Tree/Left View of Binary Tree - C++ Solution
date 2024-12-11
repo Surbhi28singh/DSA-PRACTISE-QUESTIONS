@@ -1,0 +1,34 @@
+class Solution {
+  public:
+  void solve(Node* root,vector<int> & ans ,int lvl){
+      if(root==NULL){
+          return ;
+      }
+      if(lvl==ans.size())
+          ans.push_back(root->data);
+          solve(root->left,ans,lvl+1);
+          solve(root->right,ans,lvl+1);
+      
+      
+  }
+    vector<int> leftView(Node *root) {
+       vector<int>ans;
+       solve(root,ans,0);
+       return ans;
+    }
+};
+//This C++ solution provides an efficient implementation to find the left view of a binary tree.
+The left view includes the nodes visible when the binary tree is viewed from the left side, ordered from top to bottom.
+
+Key Features:
+Uses Depth-First Search (DFS) for traversal of the binary tree.
+A recursive approach ensures that the leftmost node at each level is recorded.
+The solution efficiently processes each level and captures only the first encountered node at that level.
+How it works:
+The algorithm performs a DFS traversal, visiting nodes from top to bottom.
+At each level, the first node encountered is added to the result vector (ans).
+The function checks whether it's the first node at that level (lvl == ans.size()), ensuring only the leftmost node at each level is included in the final result.
+The left child is visited before the right child, ensuring the leftmost nodes are considered first.
+Time Complexity:
+O(N) where N is the number of nodes in the tree, as every node is visited exactly once.
+The maximum depth of the recursion is O(H) where H is the height of the tree, ranging from O(log N) for balanced trees to O(N) for skewed trees.
