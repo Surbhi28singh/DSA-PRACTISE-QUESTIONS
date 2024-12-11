@@ -1,0 +1,51 @@
+Node* solve(Node*root,int &k ,int node){
+    if (root==NULL)
+    return NULL;
+    if(root->data==node)
+    return root;
+    Node*left=solve(root->left,k,node);
+    Node*right=solve(root->right,k,node);
+    
+    if(left!=NULL && right==NULL){
+        k--;
+        if(k<=0){
+            k=INT_MAX;
+            return root;
+        }
+        return left;
+    }
+    if(left==NULL && right!=NULL){
+        k--;
+        if(k<=0){
+            k=INT_MAX;
+            return root;
+        }
+        return right;
+    }
+    return NULL ;
+}
+
+int kthAncestor(Node *root, int k, int node)
+{
+    Node*ans=solve(root,k,node);
+    if(ans==NULL )
+    return -1;
+    else
+    return ans->data;
+}
+
+//This C++ solution finds the k-th ancestor of a given node in a binary tree. The approach utilizes a depth-first search (DFS) to
+traverse the tree and find the path leading to the target node. As we traverse, we decrement k until we reach the required ancestor, r
+eturning the node's value. If there are fewer than k ancestors, the function returns -1.
+
+Features:
+Depth-First Search (DFS): Efficient traversal to find the node's ancestors.
+Time Complexity: O(N) where N is the number of nodes in the tree, as each node is visited at most once.
+Space Complexity: O(H) where H is the height of the tree (for the recursion stack).
+Explanation of the Code:
+solve Function: This function recursively traverses the binary tree. It checks if the current node matches the target node (node). 
+If the current node is the target, it returns that node. Otherwise, it recursively checks both the left and right subtrees.
+If the target node is found in either subtree, the ancestor count k is decremented.
+When k reaches zero, it means we've found the k-th ancestor, and the function returns the current node as the ancestor.
+kthAncestor Function: This function calls the solve function and returns the value of the ancestor node. If no ancestor is found 
+(i.e., there aren't k ancestors), it returns -1.
