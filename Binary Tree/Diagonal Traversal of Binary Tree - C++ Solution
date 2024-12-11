@@ -1,0 +1,32 @@
+vector<int> diagonal(Node *root)
+{
+    queue<Node*>q;
+   vector<int>ans;
+  if (root==NULL)
+   return ans;
+   q.push(root);
+   while(!q.empty()){
+       Node*temp=q.front();
+       q.pop();
+       while(temp!=NULL){
+       ans.push_back(temp->data);
+       if(temp->left){
+           q.push(temp->left);
+       }
+       
+       temp=temp->right;
+   }
+   }
+   return ans;
+}
+//This C++ solution implements the diagonal traversal of a binary tree. In diagonal traversal, nodes are grouped based on the diagonals formed by lines of slope -1, and all nodes on the same diagonal are printed together.
+
+Key Features:
+Level-order traversal using a queue: The solution employs a queue to process nodes in a level-order manner and ensures nodes on the same diagonal are processed sequentially.
+Right-side traversal: After processing each node, the algorithm moves to the right child of the node to stay within the same diagonal, while the left child is pushed into the queue for further processing.
+Efficient processing: The tree is traversed in a breadth-first manner, with diagonal elements grouped based on their relationship along a slope of -1.
+How it works:
+Queue Initialization: A queue is initialized to manage the nodes during traversal.
+Outer Loop: Each node from the front of the queue is processed. The node's data is added to the result vector.
+Diagonal Grouping: As we move through the tree, we traverse the left child (if exists) and push it into the queue for future processing. We continue moving to the right child to collect all nodes in the same diagonal.
+Edge Case Handling: If the tree is empty, an empty vector is returned
