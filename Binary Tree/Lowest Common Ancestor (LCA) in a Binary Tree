@@ -1,0 +1,42 @@
+
+class Solution {
+  public:
+    // Function to return the lowest common ancestor in a Binary Tree.
+    Node* lca(Node* root, int n1, int n2) {
+        if(root==NULL)
+        return NULL;
+        if(root->data==n1 ||root->data==n2){
+            return root;
+        }
+        Node*left=lca(root->left,n1,n2);
+        Node* right=lca(root->right,n1,n2);
+        if(left!=NULL && right!=NULL){
+            return root;
+        }
+        
+        else if(left==NULL && right!=NULL){
+            return right;
+        }
+        else if(left!=NULL && right==NULL){
+            return left;
+        }
+        else{
+            return NULL;
+        }
+    }
+};
+//This C++ solution finds the Lowest Common Ancestor (LCA) of two nodes in a Binary Tree.
+The function lca performs a recursive traversal to locate the LCA of the nodes with values n1 and n2.
+
+Key Features:
+Recursive Approach: The solution uses recursion to traverse the binary tree and check each node to see if it matches one of the target nodes (n1 or n2).
+Efficient LCA Search: When both left and right subtrees of a node return non-NULL values, the current node is identified as the LCA.
+Base Case: The traversal stops at the node if it matches either n1 or n2, or when it reaches a NULL node.
+Edge Case Handling: The solution handles edge cases, such as when the tree is empty or when one of the nodes does not exist in the tree.
+How it Works:
+The function starts by checking if the current node is NULL. If it is, it returns NULL.
+If the current node matches either of the target nodes (n1 or n2), the function returns that node as a potential LCA.
+The function then recursively searches both the left and right subtrees.
+If the left and right subtrees both return non-NULL values, it means that one target node is on the left and the other is on the right
+so the current node is the LCA.
+If only one subtree returns a non-NULL value, it means both target nodes are on that side, and the function returns that subtree's result.
