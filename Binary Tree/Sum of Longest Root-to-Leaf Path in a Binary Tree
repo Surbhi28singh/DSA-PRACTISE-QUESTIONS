@@ -1,0 +1,36 @@
+class Solution {
+  public:
+  void solve(Node*root,int sum,int &maxSum,int len,int &maxLen  ){
+      if(root==NULL){
+          if(len>maxLen){
+              maxLen=len;
+              maxSum=sum;
+          }
+          else if(len==maxLen){
+              maxSum=max(maxSum,sum);
+          }
+          return;
+      }
+      sum=sum+root->data;
+      solve(root->left,sum,maxSum,len+1,maxLen);
+       solve(root->right,sum,maxSum,len+1,maxLen);
+  }                                                                
+    int sumOfLongRootToLeafPath(Node *root) {
+        int len=0;
+        int maxLen=0;
+       int sum=0;
+       int maxSum=0;
+       solve(root,sum,maxSum,len,maxLen);
+       return maxSum;
+    }
+};
+//This C++ solution finds the sum of the longest root-to-leaf path in a binary tree. The solution uses depth-first search (DFS) to recursively explore all paths and determine the sum of the longest one.
+
+Key Features:
+Recursive Depth-First Search (DFS): The solution uses a recursive approach to traverse the tree from root to leaf.
+Tracking Maximum Path Length and Sum: During the traversal, the length and sum of the paths are compared, ensuring that the path with the longest length is selected. If there are multiple paths with the same length, the one with the maximum sum is chosen.
+Optimized Solution: The solution keeps track of the maximum path length and the corresponding sum using two variables passed by reference.
+How it works:
+Recursive Traversal: The function solve explores each node, and for each leaf node, it checks if the current path is longer than the previously recorded longest path. If the length is the same, it checks if the sum of the current path is greater than the stored sum.
+Base Case: When the recursion reaches a leaf node, it updates the maxLen and maxSum based on the current path.
+Result: The function sumOfLongRootToLeafPath calls the recursive solve function and returns the sum of the longest path found.
