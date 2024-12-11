@@ -1,0 +1,50 @@
+class Solution {
+  public:
+    // Function to return a list of nodes visible from the top view
+    // from left to right in Binary Tree.
+    vector<int> topView(Node *root) {
+        vector<int>ans;
+        if(root==NULL){
+            return ans;
+        }
+        map<int,int>topNode;
+        queue<pair<Node*,int>>q;
+        q.push(make_pair(root,0));
+        while(!q.empty()){
+            pair<Node*,int>temp=q.front();
+            q.pop();
+          Node* frontNode=temp.first;
+            int hd=temp.second;
+            if(topNode.find(hd)==topNode.end()){
+                topNode[hd]=frontNode->data;
+            }
+            if(frontNode->left)
+                q.push(make_pair(frontNode->left,hd-1));
+            
+            if(frontNode->right)
+                q.push(make_pair(frontNode->right,hd+1));
+        }
+        
+        for(auto i :topNode){
+            ans.push_back(i.second);
+        }
+        return ans;
+    }
+};
+//This C++ solution provides an efficient implementation to find the top view of a binary tree.
+The top view includes the nodes that are visible when the binary tree is viewed from the top, ordered from left to right.
+
+Key Features:
+Uses Breadth-First Search (BFS) to traverse the binary tree level by level.
+Utilizes a map to store the first node at each horizontal distance (HD) from the root.
+For each level of the tree, it checks and stores the first node that is encountered from a given HD, ensuring only the top-most node is included in the result.
+How it works:
+Map (topNode) is used to record the first node seen at each horizontal distance.
+A queue is used for level-order traversal, paired with the horizontal distance (hd) of each node.
+For each node:
+If its horizontal distance has not been recorded yet, its data is added to the result map.
+The left child decreases the HD, and the right child increases it.
+Once traversal is complete, the top view nodes are extracted from the map and returned in the correct order.
+Time Complexity:
+O(N) where N is the number of nodes in the tree, as we traverse all nodes once.
+O(log N) for map operations, but this is negligible compared to the traversal complexity.
