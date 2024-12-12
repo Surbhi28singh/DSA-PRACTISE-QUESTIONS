@@ -1,0 +1,49 @@
+#include <vector>
+#include <map>
+using namespace std;
+
+class Solution {
+public:
+    void createMapping(vector<int>& inorder, map<int, int>& nodetoIndex, int n) {
+        for (int i = 0; i < n; i++) {
+            nodetoIndex[inorder[i]] = i;
+        }
+    }
+
+    Node* solve(vector<int>& inorder, vector<int>& postorder, int& index, 
+                int startIndex, int endIndex, int n, map<int, int>& nodetoIndex) {
+        
+        if (index < 0 || startIndex > endIndex) {
+            return NULL;
+        }
+
+        int element = postorder[index--];
+        Node* root = new Node(element);
+
+        int pos = nodetoIndex[element];
+
+        root->right = solve(inorder, postorder, index, pos + 1, endIndex, n, nodetoIndex);
+        root->left = solve(inorder, postorder, index, startIndex, pos - 1, n, nodetoIndex);
+
+        return root;
+    }
+
+    Node* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        int n = inorder.size();
+        int index = n - 1;
+        map<int, int> nodetoIndex;
+        createMapping(inorder, nodetoIndex, n);
+        return solve(inorder, postorder, index, 0, n - 1, n, nodetoIndex);
+    }
+};
+//This C++ implementation constructs a binary tree from the given inorder and postorder traversal arrays.
+The solution efficiently uses recursion and a hashmap to build the tree structure.
+
+The buildTree function uses two main traversals: inorder and postorder, to reconstruct the original binary tree.
+The helper function solve recursively constructs the tree by determining the root from the postorder traversal and 
+splitting the inorder array into left and right subtrees.
+A hashmap (nodetoIndex) is used to quickly locate the position of elements in the inorder traversal, optimizing the solution.
+Features:
+Efficient tree construction using recursion and hashmap lookup.
+Handles the typical cases of binary tree construction.
+Time complexity is O(n), where n is the number of nodes in the tree.
