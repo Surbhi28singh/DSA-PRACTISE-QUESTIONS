@@ -1,0 +1,34 @@
+class Solution{
+  public:
+    pair<int,int> solve(Node*root){
+        if(root==NULL){
+            pair<int,int >p =make_pair(0,0);
+            return p;
+        }
+     pair<int,int>left=solve(root->left);
+        pair<int,int> right=solve(root->right);
+        pair<int,int>res;
+        res.first=left.second+right.second+root->data;
+        res.second=max(left.first,left.second)+max(right.first,right.second);
+        return res;
+    }
+    int getMaxSum(Node *root) 
+    {
+       pair<int,int>ans=solve(root);
+       return max(ans.first,ans.second);
+       
+       
+    }
+};
+//This repository contains a solution for finding the maximum sum of non-adjacent nodes in a binary tree. 
+The algorithm uses a dynamic programming approach to efficiently calculate the maximum sum of nodes such that no two nodes are adjacent.
+
+Key Features:
+Solves the problem using a recursive function with dynamic programming.
+Uses pairs to store the sum of non-adjacent nodes and the maximum sum when including or excluding a node.
+Ensures that no two adjacent nodes are selected for the sum.
+Explanation of the Code:
+solve(Node* root): A helper recursive function that computes two values for each node:
+The maximum sum of non-adjacent nodes when including the current node.
+The maximum sum of non-adjacent nodes when excluding the current node.
+getMaxSum(Node *root): This is the main function that returns the maximum sum by calling the solve function and considering the two possible outcomes for the root.
