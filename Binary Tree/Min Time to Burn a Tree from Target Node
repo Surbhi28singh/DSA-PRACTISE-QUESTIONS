@@ -1,0 +1,84 @@
+
+class Solution {
+public:
+    Node* createMapping(Node* root, int target, map<Node*, Node*>& nodetoparent) {
+        Node* res = NULL;
+        queue<Node*> q;
+        q.push(root);
+        nodetoparent[root] = NULL;
+        
+        while (!q.empty()) {
+            Node* frontNode = q.front();
+            q.pop();
+            
+            if (frontNode->data == target) {
+                res = frontNode;
+            }
+            
+            if (frontNode->left) {
+                q.push(frontNode->left);
+                nodetoparent[frontNode->left] = frontNode;
+            }
+            
+            if (frontNode->right) {
+                q.push(frontNode->right);
+                nodetoparent[frontNode->right] = frontNode;
+            }
+        }
+        
+        return res;
+    }
+
+    int burnTree(map<Node*, Node*>& nodetoparent, Node* targetNode) {
+        map<Node*, bool> visited;
+        queue<Node*> q;
+        q.push(targetNode);
+        visited[targetNode] = true;
+        int ans = 0;
+        
+        while (!q.empty()) {
+            bool flag = false;
+            int size = q.size();
+            
+            for (int i = 0; i < size; i++) {
+                Node* front = q.front();
+                q.pop();
+                
+                if (front->left && !visited[front->left]) {
+                    flag = true;
+                    q.push(front->left);
+                    visited[front->left] = true;
+                }
+                
+                if (front->right && !visited[front->right]) {
+                    flag = true;
+                    q.push(front->right);
+                    visited[front->right] = true;
+                }
+                
+                if (nodetoparent[front] && !visited[nodetoparent[front]]) {
+                    flag = true;
+                    q.push(nodetoparent[front]);
+                    visited[nodetoparent[front]] = true;
+                }
+            }
+            
+            if (flag) {
+                ans++;
+            }
+        }
+        
+        return ans;
+    }
+
+    int minTime(Node* root, int target) {
+        map<Node*, Node*> nodetoparent;
+        Node* targetNode = createMapping(root, target, nodetoparent); 
+        return burnTree(nodetoparent, targetNode);
+    }
+};
+//This solution calculates the minimum time required to burn an entire binary tree, starting from a target node.
+The fire spreads to adjacent nodes (left, right, or parent) in each minute. The solution uses BFS to simulate the spread of fire 
+and tracks the time it takes for the fire to reach all nodes.
+
+
