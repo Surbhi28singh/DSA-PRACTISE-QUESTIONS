@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int>res;
+        TreeNode*curr=root;
+        while(curr!=NULL){
+            if(curr->left==NULL){
+                res.push_back(curr->val);
+                curr=curr->right;
+            }
+            else{
+              TreeNode*prev=curr->left;
+              while(prev->right !=curr && prev->right!=NULL){
+                prev=prev->right;
+              }
+              if(prev->right==NULL){
+                prev->right=curr;
+                curr=curr->left;
+              }
+              else{
+                 prev->right=NULL;
+                 res.push_back(curr->val);
+                 curr=curr->right;
+              }
+            }
+        }
+        return res;
+    }
+};
+//Efficient in-order traversal of a binary tree using Morris Traversal, with O(n) time complexity and O(1) space complexity. 
+This algorithm eliminates the need for recursion 
+or a stack by temporarily modifying the tree structure with threaded links. Ideal for large trees where space efficiency is critical.
