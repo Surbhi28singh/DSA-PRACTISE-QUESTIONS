@@ -1,0 +1,22 @@
+bool searchInBST(BinaryTreeNode<int> *root, int x) {
+    BinaryTreeNode<int> *temp=root;
+   while(temp!=NULL){
+    if(temp->data==x){
+        return true;
+    }
+    if(temp->data<x){
+        temp=temp->right;
+    }
+    else{
+       temp=temp->left;
+    }
+   }
+   return false;
+}
+//This is an iterative search function for a Binary Search Tree (BST) in C++. The function searches for a given integer value in the tree and returns true if the value exists in the tree, or false if it does not.
+
+Key Features:
+
+Time Complexity: O(h), where h is the height of the tree (best case O(log n) for balanced trees).
+Space Complexity: O(1), as it uses no extra space besides the given root node.
+Iterative Approach: This implementation avoids recursion, making it more memory efficient for large trees.
