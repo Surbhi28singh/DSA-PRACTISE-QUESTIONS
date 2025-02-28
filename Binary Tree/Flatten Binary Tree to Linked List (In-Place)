@@ -1,0 +1,32 @@
+class Solution
+{
+    public:
+    void flatten(Node *root)
+    {
+        Node*curr=root;
+        while(curr!=NULL){
+            if(curr->left){
+                Node*prev=curr->left;
+                while(prev->right)
+                    prev=prev->right;
+                    
+                    prev->right=curr->right;
+                    curr->right=curr->left;
+                    curr->left=NULL;
+                    
+                
+            }
+            curr=curr->right;
+        }
+    }
+};
+//This C++ solution flattens a binary tree into a linked list using O(1) space complexity (in-place transformation).
+The algorithm modifies the tree such that the left child of each node becomes NULL, and all nodes are arranged in a rightward 
+path following a pre-order traversal. It uses a while loop to traverse the tree and reassign pointers, ensuring the tree structure 
+is flattened without recursion or additional data structures.
+
+Key Features:
+
+Time Complexity: O(n), where n is the number of nodes in the tree.
+Space Complexity: O(1) (in-place modification).
+Traversal Order: Pre-order (root, left, right).
