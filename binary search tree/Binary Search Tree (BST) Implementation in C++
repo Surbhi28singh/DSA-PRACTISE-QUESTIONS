@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node*left;
+    Node*right;
+    
+    Node(int d){
+        this->data=d;
+        this->left=NULL;
+        this->right=NULL;
+    }
+};
+Node*insertVal(Node* &root,int d){
+    if(root==NULL){
+        root= new Node(d);
+        return root;
+    }
+    if(d>root->data){
+        insertVal(root->right,d);
+    }
+    else if(d<root->data){
+        insertVal(root->left,d);
+    }
+    return root;
+
+}
+void takeInput(Node* &root){
+    int data;
+    cin>>data;
+    while(data!=-1){
+        insertVal(root,data);
+        cin>>data;
+    }
+}
+
+int main()
+{
+    Node*root=NULL;
+    cout<<"enter data"<<endl;
+    takeInput(root);
+
+    
+    return 0;
+}
+//This is a C++ implementation of a Binary Search Tree (BST). 
+The program allows the insertion of integer values into the BST, 
+following the fundamental rule that all nodes to the left of a node contain smaller values, and all nodes to the right contain larger values.
+
+Key Features:
+
+Insert Functionality: Allows insertion of values into the BST recursively.
+Input Handling: Takes user input until -1 is entered, which is used to build the tree.
+Recursive Tree Insertion: Efficient insertion method maintaining BST properties
