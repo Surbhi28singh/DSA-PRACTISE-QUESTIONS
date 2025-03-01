@@ -1,0 +1,23 @@
+void inorderTraversal(TreeNode<int>* root,vector<int> &inorder){
+    if(root==NULL)
+    return ;
+    inorderTraversal(root->left,inorder);
+    inorder.push_back(root->data);
+    inorderTraversal(root->right,inorder);
+}
+TreeNode<int>* flatten(TreeNode<int>* root)
+{
+    vector<int>ans;
+    inorderTraversal(root,ans);
+    TreeNode<int>* newroot =new TreeNode<int>(ans[0]);
+    TreeNode<int>* curr= newroot;
+    for(int i=1;i<ans.size();i++){
+        TreeNode<int>* temp=new TreeNode<int>(ans[i]);
+        curr->left=NULL;
+        curr->right=temp;
+        curr=temp;
+    }
+    return newroot;
+    
+    
+}
