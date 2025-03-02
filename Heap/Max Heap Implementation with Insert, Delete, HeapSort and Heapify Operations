@@ -1,3 +1,4 @@
+// Online C++ compiler to run C++ program online
 #include <iostream>
 using namespace std;
 class heap{
@@ -65,6 +66,14 @@ void heapify(int arr[],int n,int i){
         heapify(arr,n,largest);
     }
 }
+void heapSort(int arr[],int n){
+
+while(n>1){
+swap(arr[n],arr[1]);
+n--;
+heapify(arr,n,1);
+}
+}
 int main() {
     heap h;
    h.insert(50); 
@@ -81,6 +90,11 @@ int main() {
           heapify(arr,n,i);
       }
       for(int i=1;i<=n;i++){
+          cout<<arr[i]<< " ";
+      }
+      cout<<endl;
+      heapSort(arr,n);
+       for(int i=1;i<=n;i++){
           cout<<arr[i]<< " ";
       }
       cout<<endl;
