@@ -1,0 +1,24 @@
+#include <iostream>
+#include<map>
+#include<unordered_map>
+using namespace std;
+
+int main()
+{
+   unordered_map<string,int>m;
+   pair<string,int>pair1=make_pair("surbhi",1);
+   m.insert(pair1);
+   pair<string,int>pair2("singh",2);
+   m.insert(pair2);
+   m["student"]=3;
+   m.erase("singh");
+   cout<<m.count("is")<<endl;
+   cout<<m["singh"]<<endl;
+   cout<<m.at("singh")<<endl;
+   for(auto i:m){
+       cout<<i.first<<" "<<i.second<<endl;
+   }
+   cout<<m.size()<<endl;
+
+    return 0;
+}
