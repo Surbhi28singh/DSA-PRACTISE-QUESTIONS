@@ -1,0 +1,28 @@
+#include <queue>
+#include <vector>
+
+void bfs(int i, vector<vector<int>> &adj, vector<bool> &visited, vector<int> &ans) {
+    queue<int> q;
+    q.push(i);
+    visited[i] = true;
+
+    while (!q.empty()) {
+        int frontNode = q.front();
+        q.pop();
+        ans.push_back(frontNode);
+
+        for (auto neighbor : adj[frontNode]) {
+            if (!visited[neighbor]) {
+                q.push(neighbor);
+                visited[neighbor] = true;
+            }
+        }
+    }
+}
+
+vector<int> bfsTraversal(int n, vector<vector<int>> &adj) {
+    vector<int> ans;
+    vector<bool> visited(n, false);
+    bfs(0, adj, visited, ans);
+    return ans;
+}
