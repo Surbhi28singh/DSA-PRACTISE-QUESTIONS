@@ -1,0 +1,41 @@
+#include<unordered_map>
+#include<list>
+#include <iostream>
+using namespace std;
+class graph{
+   public:
+   unordered_map<int,list<int>>adj;
+   void addEdge(int u,int v ,bool direction){
+       adj[u].push_back(v);
+       if(direction==0){
+           adj[v].push_back(u);
+       }
+   }
+   void printList(){
+       for(auto i:adj){
+           cout<<i.first<< "->";
+           for(auto j:i.second){
+               cout<<j<<",";
+           }
+           cout<<endl;
+       }
+   }
+};
+int main()
+{
+    int n ;
+    cout<<"enter no of nodes"<<endl;
+    cin>>n;
+    int e;
+    cout<<"enter no of edges"<<endl;
+    cin>>e;
+    
+  graph g;
+for(int i=0;i<e;i++){
+    int u,v ;
+    cin>>u>>v;
+    g.addEdge(u,v,0);
+}
+  g.printList();
+    return 0;
+}
