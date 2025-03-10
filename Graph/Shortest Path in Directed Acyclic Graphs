@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class graph {
+public:
+    unordered_map<int, list<pair<int, int>>> adj;
+
+    void addEdge(int u, int v, int weight) {
+        pair<int, int> p = make_pair(v, weight);
+        adj[u].push_back(p);
+    }
+
+    void printEdge() {
+        for (auto i : adj) {
+            cout << i.first << "->";
+            for (auto j : i.second) {
+                cout << "(" << j.first << ", " << j.second << ") ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+    }
+
+    void dfs(unordered_map<int, bool> &visited, int node, stack<int> &top) {
+        visited[node] = true;
+        for (auto i : adj[node]) {
+            if (!visited[i.first]) { 
+                dfs(visited, i.first, top);
+            }
+        }
+        top.push(node); 
+    }
+
+    void getPath(int src, vector<int> &dist, stack<int> &top) {
+        dist[src] = 0;
+        while (!top.empty()) {
+            int topo = top.top();
+            top.pop();
+
+            if (dist[topo] != INT_MAX) {
+                for (auto i : adj[topo]) {
+                    if (dist[topo] + i.second < dist[i.first]) {
+                        dist[i.first] = dist[topo] + i.second;
+                    }
+                }
+            }
+        }
+    }
+};
+
+int main() {
+    graph g;
+    g.addEdge(0, 1, 5);
+    g.addEdge(0, 2, 7);
+    g.addEdge(1, 2, 2);
+    g.addEdge(1, 3, 6);
+    g.addEdge(2, 3, 7);
+    g.addEdge(2, 4, 4);
+    g.addEdge(2, 5, 2);
+    g.addEdge(3, 4, -1);
+    g.addEdge(4, 5, -2);
+
+    g.printEdge();
+
+    unordered_map<int, bool> visited;
+    stack<int> s;
+    int n = 6;
+ 
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            g.dfs(visited, i, s);
+        }
+    }
+
+    int src = 1; 
+    vector<int> dist(n, INT_MAX);
+
+    g.getPath(src, dist, s);
+
+    cout << "Shortest distances from node " << src << ":" << endl;
+    for (int i = 0; i < dist.size(); i++) {
+        if (dist[i] == INT_MAX)
+            cout << "INF ";
+        else
+            cout << dist[i] << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
