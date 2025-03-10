@@ -1,0 +1,82 @@
+//using bfs//
+#include <bits/stdc++.h> 
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+  unordered_map<int,list<int>>adj;
+for(int i=0;i<edges.size();i++){
+    int u=edges[i].first-1;
+    int w=edges[i].second-1;
+    adj[u].push_back(w);
+}
+vector<int>indegree(n,0);
+for(auto i:adj){
+    for(auto j:i.second){
+        indegree[j]++;
+    }
+}
+queue<int>q;
+for(int i=0;i<n;i++){
+    if(indegree[i]==0)
+    q.push(i);
+}
+vector<int>ans;
+int cnt=0;
+
+while(!q.empty()){
+int front=q.front();
+q.pop();
+ans.push_back(front);
+cnt++;
+for(auto i:adj[front]){
+    indegree[i]--;
+    if(indegree[i]==0)
+    q.push(i);
+}
+}
+if (cnt==n){
+    return false;
+}
+else{
+return true;
+}
+}
+//using dfs//
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isCycle(int node, vector<list<int>> &adj, vector<int> &visited, vector<int> &dfsvisited) {
+    visited[node] = 1;
+    dfsvisited[node] = 1;
+
+    for (auto i : adj[node]) {
+        if (!visited[i]) {
+            if (isCycle(i, adj, visited, dfsvisited))
+                return true;
+        } else if (dfsvisited[i]) {
+            return true;
+        }
+    }
+    dfsvisited[node] = 0; 
+    return false;
+}
+
+int detectCycleInDirectedGraph(int n, vector<pair<int, int>> &edges) {
+    vector<list<int>> adj(n + 1);
+    
+    for (int i = 0; i < edges.size(); i++) {
+        int u = edges[i].first;
+        int v = edges[i].second;
+        adj[u].push_back(v);
+    }
+
+    vector<int> visited(n + 1, 0);
+    vector<int> dfsvisited(n + 1, 0);
+
+    for (int i = 1; i <= n; i++) {
+        if (!visited[i]) {
+            if (isCycle(i, adj, visited, dfsvisited)) {
+                return 1;
+            }
+        }
+    }
+    return 0; // No cycle
+}
