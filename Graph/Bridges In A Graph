@@ -1,0 +1,50 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(unordered_map<int, list<int>> &adj, vector<bool> &vis, vector<int> &disc, vector<int> &low, int parent, int node, int &timer, vector<vector<int>> &result) {
+    vis[node] = true;
+    disc[node] = low[node] = timer++;
+
+    for (auto nbr : adj[node]) {
+        if (nbr == parent) continue; 
+
+        if (!vis[nbr]) {
+            dfs(adj, vis, disc, low, node, nbr, timer, result);
+            low[node] = min(low[node], low[nbr]);
+
+            // Check for bridge
+            if (low[nbr] > disc[node]) {
+                result.push_back({node, nbr});
+            }
+        } else {
+            // Back edge
+            low[node] = min(low[node], disc[nbr]);
+        }
+    }
+}
+
+vector<vector<int>> findBridges(vector<vector<int>> &edges, int v, int e) {
+    unordered_map<int, list<int>> adj;
+    for (int i = 0; i < e; i++) {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    vector<int> disc(v, -1);
+    vector<int> low(v, -1);
+    vector<bool> vis(v, false);
+    vector<vector<int>> result;
+    int timer = 0;
+    int parent = -1;
+
+    for (int i = 0; i < v; i++) {
+        if (!vis[i]) {
+            dfs(adj, vis, disc, low, parent, i, timer, result);
+        }
+    }
+
+    return result;
+}
