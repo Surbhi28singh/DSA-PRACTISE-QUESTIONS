@@ -1,0 +1,65 @@
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+void dfs(int node, int parent, vector<int> &disc, vector<int> &low, vector<bool> &visited, unordered_map<int, list<int>> &adj, int &timer, vector<int> &ap) {
+    visited[node] = true;
+    disc[node] = low[node] = timer++;
+    int child = 0;
+    for (auto i : adj[node]) {
+        if (!visited[i]) {
+            dfs(i, node, disc, low, visited, adj, timer, ap);
+            low[node] = min(low[node], low[i]);
+            if (low[i] >= disc[node] && parent != -1) {
+                ap[node] = 1;
+            }
+            child++;
+        } else if (i != parent) {
+            low[node] = min(low[node], disc[i]);
+        }
+    }
+    if (parent == -1 && child > 1) {
+        ap[node] = 1;
+    }
+}
+
+int main() {
+    int n = 5;
+    vector<pair<int, int>> edges;
+    edges.push_back({0, 3});
+    edges.push_back({3, 4});
+    edges.push_back({0, 4});
+    edges.push_back({0, 1});
+    edges.push_back({1, 2});
+
+    unordered_map<int, list<int>> adj;
+    for (int i = 0; i < edges.size(); i++) {
+        int u = edges[i].first;
+        int v = edges[i].second;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    int timer = 0;
+    vector<int> disc(n, -1);
+    vector<int> low(n, -1);
+    vector<bool> visited(n, false);
+    vector<int> ap(n, 0);
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            dfs(i, -1, disc, low, visited, adj, timer, ap);
+        }
+    }
+
+    cout << "Articulation points are: " << endl;
+    for (int i = 0; i < n; i++) {
+        if (ap[i] != 0) {
+            cout << i << " ";
+        }
+    }
+    cout << endl;
+
+    return 0;
+}
