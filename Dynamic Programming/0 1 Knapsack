@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+int solve(vector<int> weight, vector<int> value,int index, int maxWeight,int n){
+	vector<vector<int>>dp(n,vector<int>(maxWeight+1,0));
+	for (int w = weight[0]; w <= maxWeight; w++) {  
+    dp[0][w] = value[0];
+}
+	
+	
+   for (int i = 1; i < n; i++) { 
+        for (int w = 0; w <= maxWeight; w++) { 
+            int exclude = dp[i - 1][w]; 
+            int include = 0;
+            if (weight[i] <= w) 
+                include = value[i] + dp[i - 1][w - weight[i]];
+            
+            dp[i][w] = max(include, exclude); // Choose max of including or excluding
+        }
+    }
+	return dp[n-1][maxWeight];
+}
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+
+return solve(weight,value,n-1,maxWeight,n);
+
+}	
