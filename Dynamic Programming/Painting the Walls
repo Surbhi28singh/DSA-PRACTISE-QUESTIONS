@@ -1,0 +1,16 @@
+
+class Solution {
+public:
+    int paintWalls(vector<int>& cost, vector<int>& time) {
+        int n =cost.size();
+         vector<int> dp(n + 1, 1e9);
+         dp[0]=0;
+         for(int i=0;i<n;i++){
+         for(int w=n;w>0;w--){
+            int prevWalls=max(0,w-1-time[i]);
+           dp[w] = min(dp[w], cost[i] + dp[prevWalls]);
+         }
+         }
+         return dp[n];
+    }
+};
