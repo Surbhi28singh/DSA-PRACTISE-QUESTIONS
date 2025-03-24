@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int minimumDeletions(vector<int>& nums) {
+           
+        int n =nums.size();
+        int minIdx=min_element(nums.begin(),nums.end())-nums.begin();
+        int maxIdx=max_element(nums.begin(),nums.end())-nums.begin();
+        if (minIdx > maxIdx)
+         swap(minIdx, maxIdx);
+        int frontremove=maxIdx+1;
+        int backremove=n-minIdx;
+        int mix= (minIdx + 1) + (n - maxIdx);
+        return min({frontremove,backremove,mix});
+        
+    
+    }
+};
