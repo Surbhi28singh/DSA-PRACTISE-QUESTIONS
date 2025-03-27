@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+  public:
+    int getMinDiff(vector<int> &arr, int k) {
+        int n = arr.size();
+        if (n == 1) return 0; // If only one tower, no modification needed
+
+        // Step 1: Sort the array
+        sort(arr.begin(), arr.end());
+
+        // Step 2: Calculate initial difference
+        int initialDiff = arr[n-1] - arr[0];
+
+        // Step 3: Set initial min and max after modification
+        int mini = arr[0] + k;
+        int maxi = arr[n-1] - k;
+
+        // Ensure mini is smaller than maxi
+        if (mini > maxi)
+            swap(mini, maxi);
+
+        // Step 4: Iterate to adjust min-max values
+        for (int i = 0; i < n - 1; i++) {
+            int newMini = min(mini, arr[i+1] - k);
+            int newMaxi = max(maxi, arr[i] + k);
+
+            // If new minimum goes negative, ignore this iteration
+            if (newMini < 0)
+                continue;
+
+            // Update the minimum difference
+            initialDiff = min(initialDiff, newMaxi - newMini);
+        }
+
+        return initialDiff;
+    }
+};
