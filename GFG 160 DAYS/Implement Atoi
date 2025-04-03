@@ -1,0 +1,27 @@
+class Solution {
+  public:
+    int myAtoi(char *s) {
+       int index=0;
+       int sign=1;
+       long result=0;;
+       while(s[index] ==' '){
+           index++;
+       }
+       if(s[index]=='-'|| s[index]=='+'){
+           sign=(s[index]=='-')?-1:1;
+           index++;
+       }
+       while(s[index]>='0'&& s[index]<='9'){
+           if(result>(INT_MAX-(s[index]-'0'))/10){
+               return (sign==1)?INT_MAX:INT_MIN;
+           }
+           result=result*10+(s[index]-'0');
+           
+           
+           index++;
+       }
+       return result*sign;
+       }
+      
+           
+    };
