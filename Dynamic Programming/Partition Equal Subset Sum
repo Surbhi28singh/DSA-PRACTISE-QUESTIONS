@@ -1,0 +1,81 @@
+//top down//
+class Solution {
+  public:
+  bool solve(int index,vector<int>& arr,int target,vector<vector<int>>&dp){
+      if(index>=arr.size()){
+          return false;
+      }
+      if(target==0){
+          return true;
+      } 
+      if(target<0){
+          return false;
+      }
+      if(dp[index][target]!=-1){
+          return dp[index][target];
+      }
+      int incl=solve(index+1,arr,target-arr[index],dp);
+      int excl=solve(index+1,arr,target,dp);
+       return dp[index][target]=incl or excl;
+      
+  }
+  
+    bool equalPartition(vector<int>& arr) {
+        int total=0;
+        for(int i=0;i<arr.size();i++){
+            total+=arr[i];
+        }
+        int n =arr.size();
+        if(total & 1){
+            return false;
+        }
+       
+        int target =total/2;
+        vector<vector<int>>dp(n+1,vector<int>(target+1,-1));
+        
+       return solve(0,arr,target,dp);
+        
+    }
+};
+//bottom up//
+class Solution {
+  public:
+  bool solve(int index,vector<int>& arr,int target){
+     int n =arr.size();
+      vector<vector<int>>dp(n+1,vector<int>(target+1,0));
+      for(int i=0;i<=n;i++){
+          dp[i][0]=1;
+      }
+      for(int i=n-1;i>=0;i--){
+          for(int j=0;j<=target;j++){
+                bool incl=0;
+              if(j-arr[i]>=0)
+             incl=dp[i+1][j-arr[i]];
+              
+             bool excl=dp[i+1][j];
+             dp[i][j]=incl or excl;
+          }
+          
+      }
+      
+       return  dp[0][target];
+      
+  }
+  
+    bool equalPartition(vector<int>& arr) {
+        int total=0;
+        for(int i=0;i<arr.size();i++){
+            total+=arr[i];
+        }
+        int n =arr.size();
+        if(total & 1){
+            return false;
+        }
+       
+        int target =total/2;
+        
+        
+       return solve(0,arr,target);
+        
+    }
+};
