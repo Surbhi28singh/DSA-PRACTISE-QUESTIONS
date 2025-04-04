@@ -1,0 +1,58 @@
+//top down//
+class Solution {
+  public:
+  int solve(int faces, int dice, int target,vector<vector<int>>&dp){
+      if(dice== 0 && target!=0){
+          return 0;
+      }
+      if(dice== 0 && target==0){
+          return 1;
+      }
+      if(dice!=0 && target==0){
+          return 0;
+      }
+      if(target<0){
+          return 0;
+      }
+      if(dp[dice][target]!=-1){
+          return dp[dice][target];
+      }
+      int ans=0;;
+      for(int i=1;i<=faces;i++){
+          ans=ans+solve(faces,dice-1,target-i,dp);
+      }
+      return dp[dice][target]=ans;
+  }
+    int noOfWays(int m, int n, int x) {
+        vector<vector<int>>dp(n+1,vector<int>(x+1,-1));
+        return solve(m,n,x,dp);
+    }
+};
+//bottom up//
+class Solution {
+  public:
+  int solve(int faces, int dice, int target){
+     vector<vector<int>>dp(dice+1,vector<int>(target+1,0));
+      dp[0][0]=1;
+      int ans=0;
+      for(int i=1;i<=dice;i++){
+          
+          for(int j=0;j<=target;j++){
+              int ans=0;
+              for(int k=1;k<=faces;k++){
+                if (j - k >= 0) {
+                      ans += dp[i-1][j-k]; 
+                  }
+          }
+          
+          dp[i][j]=ans;
+          }
+         
+      }
+      return dp[dice][target];
+  }
+    int noOfWays(int m, int n, int x) {
+       
+        return solve(m,n,x);
+    }
+};
