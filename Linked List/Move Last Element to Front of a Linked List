@@ -1,0 +1,20 @@
+
+class Solution {
+  public:
+    Node *moveToFront(Node *head) {
+        if(head->next==NULL){
+            return head;
+        }
+        
+        Node*curr=head;
+        while(curr->next!=NULL && curr->next->next!=NULL){
+            curr=curr->next;
+        }
+        Node*last=curr->next;
+        curr->next=NULL;
+        last->next=head;
+        head=last;
+        return last;
+        
+    }
+};
