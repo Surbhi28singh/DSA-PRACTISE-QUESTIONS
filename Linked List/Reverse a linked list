@@ -1,3 +1,4 @@
+//iterative//
  class Solution {
   public:
     Node* reverseList(struct Node* head) {
@@ -12,6 +13,20 @@
             
         }
         return prev;
+        
+    }
+};
+//recursive//
+class Solution {
+  public:
+    Node* reverseList(struct Node* head) {
+        if(head==NULL || head->next==NULL){
+            return head;
+        }
+        Node* newhead=reverseList(head->next);
+        head->next->next=head;
+        head->next=NULL;
+        return newhead;
         
     }
 };
