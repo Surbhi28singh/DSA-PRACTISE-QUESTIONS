@@ -1,0 +1,30 @@
+class Solution {
+  public:
+    vector<int> factorial(int n) {
+        vector<int>res;
+        
+        res.push_back(1);
+        for(int x=2;x<=n;x++){
+            int carry=0;
+            for(int i=0;i<res.size();i++){
+               
+                int prod=res[i]*x+carry;
+                
+                res[i]=prod%10;
+                carry=prod/10;
+                
+            }
+            while(carry){
+                res.push_back(carry % 10);
+                carry/=10;
+            }
+            
+            
+        }
+       
+        reverse(res.begin(),res.end());
+        return res;
+       
+        
+    }
+};
