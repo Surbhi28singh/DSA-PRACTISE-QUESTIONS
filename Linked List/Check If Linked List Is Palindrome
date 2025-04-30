@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    
+    bool isPalindrome(Node *head) {
+          vector<int>original;
+          Node*temp=head;
+          while(temp!=NULL){
+              original.push_back(temp->data);
+              temp=temp->next;
+          }
+          vector<int>reversed=original;
+          reverse(reversed.begin(),reversed.end());
+          return original==reversed;
+    }
+};
