@@ -1,0 +1,21 @@
+class Solution {
+public:
+    
+    bool compare(TreeNode*leftt,TreeNode*rightt){
+        if( !leftt&& !rightt)
+        return true;
+        if(!leftt ||!rightt )
+        return false;
+        return (leftt->val==rightt->val) && compare(leftt->left ,rightt->right)&&              
+        compare(rightt->left , leftt->right);
+        
+    }
+    bool isSymmetric(TreeNode* root) {
+        if(root==nullptr)
+        return true;
+        return compare(root->left,root->right);
+
+        
+        
+    }
+};
