@@ -1,0 +1,17 @@
+class Solution {
+  public:
+  int cldiameter(Node*root,int &res){
+      if(root==NULL)
+      return 0;
+      int lh=cldiameter(root->left,res);
+      int rh=cldiameter(root->right,res);
+      res=max(res,lh+rh);
+      return  1+max(lh,rh);
+  }
+    int diameter(Node* root) {
+        int res=0;
+        cldiameter(root,res);
+        return res;
+        
+    }
+};
